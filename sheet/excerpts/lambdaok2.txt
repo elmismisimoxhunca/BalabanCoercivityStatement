@@ -1,0 +1,3 @@
+def LambdaOK2 {Lu Lf : PeriodicLatticeExtent} (ell M R k : ℕ) (S : Tower Lf)
+    (Lam : Set (PeriodicLatticeSite Lu)) : Prop :=
+  LambdaOK ell M R k S Lam ∧ LamBlockSum ell Lam

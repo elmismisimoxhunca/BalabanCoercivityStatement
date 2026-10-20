@@ -1,0 +1,3 @@
+def IsClassCube {L : PeriodicLatticeExtent} (ell M f k : ℕ) (S : Tower L)
+    (sites : Set (PeriodicLatticeSite L)) (j : ℕ) : Prop :=
+  DescribedAt ell M f k S sites j ∧ ∀ i : ℕ, DescribedAt ell M f k S sites i → i = j

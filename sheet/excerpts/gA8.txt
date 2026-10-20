@@ -1,0 +1,26 @@
+structure TowerGeom (L : PeriodicLatticeExtent) where
+  ell : ℕ
+  k : ℕ
+  Om0 : Set (PeriodicLatticeSite L)
+  Lam : ℕ → Set (PeriodicLatticeSite L)
+def geomOf (ell k : ℕ) {Lf : PeriodicLatticeExtent} (S : Tower Lf) : TowerGeom Lf where
+  ell := ell
+  k := k
+  Om0 := S.Om 0
+  Lam := fun j => {x | (∀ μ : Fin 3, ell ^ j ∣ (x μ).val) ∧ x ∈ S.Om j ∧ x ∉ S.Om (j + 1)}
+noncomputable def Qpa (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ∑ j ∈ Finset.range (G.k + 1), ∑ y : PeriodicLatticeSite L,
+    if y ∈ G.Lam j then (ajSeq a G.ell j * (G.ell : ℝ) ^ j) •
+      ((ContinuousLinearMap.adjoint (Qlev G U j y)).comp (Qlev G U j y)) else 0
+noncomputable def DelpA (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ((siteMask G.Om0).comp (lapFull U + Qpa G U a)).comp (siteMask G.Om0)
+noncomputable def Gp (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  (Ring.inverse (DelpA G U a + (1 - siteMask G.Om0))).comp (siteMask G.Om0)
+noncomputable def lapDir (G : TowerGeom L) (U : Cfg L) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ((siteMask G.Om0).comp (lapFull U)).comp (siteMask G.Om0)
+noncomputable def Rproj (G : TowerGeom L) (U : Cfg L) : SiteL2 L →L[ℝ] SiteL2 L :=
+  (RImage G U).starProjection
+noncomputable def Wop (G : TowerGeom L) (U : Cfg L) (a : ℝ) : BondFnL2 L →L[ℝ] BondFnL2 L :=
+  1 - (gradL2 U).comp ((Gp G U a).comp ((Rproj G U).comp (gradAdj U)))
+noncomputable def DpiFull (G : TowerGeom L) (U : Cfg L) (a : ℝ) : BondFnL2 L →L[ℝ] BondFnL2 L :=
+  (ContinuousLinearMap.adjoint (Wop G U a)).comp ((Delta G U).comp (Wop G U a))

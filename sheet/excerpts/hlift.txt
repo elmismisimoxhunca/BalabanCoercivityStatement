@@ -1,0 +1,4 @@
+noncomputable def hLift {ell : ℕ} (Lam : Set (PeriodicLatticeSite L))
+    (Q : (Bond L → SuTwo) →ₗ[ℝ] (CoarseBond L ell → SuTwo)) :
+    (CoarseBond L ell → SuTwo) →ₗ[ℝ] (Bond L → SuTwo) :=
+  iotaD ell Lam ∘ₗ H0inv Lam Q ∘ₗ rhoD ell Lam

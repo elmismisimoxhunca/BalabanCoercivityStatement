@@ -1,0 +1,10 @@
+def Target8TwoDom : Prop :=
+  ∀ (ell : ℕ) (hell : 2 ≤ ell) (a : ℝ), 0 < a →
+    ∃ m₀ : ℕ, 1 ≤ m₀ ∧ ∀ m : ℕ, m₀ ≤ m → ∃ R₀ : ℕ, ∀ R : ℕ, R₀ ≤ R →
+      SidePow6 ell (ell ^ m) a ∧ ∃ a₀ : ℝ, 0 < a₀ ∧ ∃ γ₀ : ℝ, 0 < γ₀ ∧
+        ∀ (k : ℕ), 1 ≤ k → ∀ (Lu : PeriodicLatticeExtent) (α₀ : ℝ), 0 < α₀ → (12 : ℝ) * ((ell ^ m : ℕ) : ℝ) * α₀ ≤ a₀ →
+          TorusOK ell (ell ^ m) Lu → ∀ (S : Tower (scaleUp ell k Lu)), AdalyFormal.ThinLayer.AdmNoBase ell (ell ^ m) R k S →
+          ∀ (Sc : Tower (scaleUp ell k Lu)), (∀ j : ℕ, 1 ≤ j → Sc.Om j = S.Om j) → S.Om 0 ⊆ Sc.Om 0 →
+          ∀ (Lam : Set (PeriodicLatticeSite Lu)), LambdaOK2 ell (ell ^ m) R k S Lam →
+          ∀ (U : LinkCfg (scaleUp ell k Lu)), ClassCoupled ell (ell ^ m) 12 k Sc α₀ ((ell : ℝ) ^ k)⁻¹ U →
+            InstIneq ell k (by omega) a Lu γ₀ S Lam U

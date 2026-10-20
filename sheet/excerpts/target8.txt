@@ -1,0 +1,4 @@
+def P428Target8 : Prop :=
+  ∀ (ell : ℕ) (hell : 2 ≤ ell) (a : ℝ), 0 < a →
+    ∃ m₀ : ℕ, 1 ≤ m₀ ∧ ∀ m : ℕ, m₀ ≤ m → ∃ R₀ : ℕ, ∀ R : ℕ, R₀ ≤ R →
+      P428Genuine8 ell (ell ^ m) R (by omega) a

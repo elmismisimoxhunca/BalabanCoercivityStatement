@@ -1,0 +1,3 @@
+def LamPrime {Lu : PeriodicLatticeExtent} (ell : ℕ) (Lam : Set (PeriodicLatticeSite Lu)) :
+    Set (PeriodicLatticeSite Lu) :=
+  {y | y ∈ CoarseLattice Lu ell ∧ ∀ x ∈ blockOf y ell, x ∈ Lam}

@@ -1,0 +1,5 @@
+structure TowerGeom (L : PeriodicLatticeExtent) where
+  ell : ℕ
+  k : ℕ
+  Om0 : Set (PeriodicLatticeSite L)
+  Lam : ℕ → Set (PeriodicLatticeSite L)

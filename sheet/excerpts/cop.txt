@@ -1,0 +1,4 @@
+noncomputable def Cop {ell : ℕ} (Lam : Set (PeriodicLatticeSite L))
+    (Q : (Bond L → SuTwo) →ₗ[ℝ] (CoarseBond L ell → SuTwo)) :
+    (Bond L → SuTwo) →ₗ[ℝ] (Bond L → SuTwo) :=
+  LinearMap.id - hLift Lam Q ∘ₗ Q

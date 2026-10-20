@@ -1,0 +1,26 @@
+def InstIneq (ell k : ℕ) (hell : 0 < ell) (a : ℝ) (Lu : PeriodicLatticeExtent) (γ₀ : ℝ)
+    (S : Tower (scaleUp ell k Lu)) (Lam : Set (PeriodicLatticeSite Lu)) (U : LinkCfg (scaleUp ell k Lu)) : Prop :=
+  ∀ (Bt : Bond Lu → SuTwo), OnLambdaTildeIn Lam ell Bt → OnLambdaT Lam Bt →
+    γ₀ * bondEnergy Bt ≤
+      GenP.genForm (gparams ell k Lu hell S U a Lam)
+        (WithLp.toLp 2 (GenP.genC (gparams ell k Lu hell S U a Lam) Bt))
+def CoercG8At (ell M R k : ℕ) (hell : 0 < ell) (a : ℝ) (Lu : PeriodicLatticeExtent)
+    (c : ℕ) (α₀ γ₀ : ℝ) : Prop :=
+  TorusOK ell M Lu →
+  ∀ (S : Tower (scaleUp ell k Lu)), Admissible ell M R k S →
+  ∀ (Lam : Set (PeriodicLatticeSite Lu)), LambdaOK2 ell M R k S Lam →
+  ∀ (U : LinkCfg (scaleUp ell k Lu)),
+    ClassCoupled ell M c k S α₀ ((ell : ℝ) ^ k)⁻¹ U →
+    InstIneq ell k hell a Lu γ₀ S Lam U
+def P428Core8At (ell M R : ℕ) (hell : 0 < ell) (a : ℝ) (c : ℕ) : Prop :=
+  ∃ a₀ : ℝ, 0 < a₀ ∧ ∃ γ₀ : ℝ, 0 < γ₀ ∧
+    ∀ (k : ℕ), 1 ≤ k → ∀ (Lu : PeriodicLatticeExtent) (α₀ : ℝ), 0 < α₀ → (c : ℝ) * M * α₀ ≤ a₀ →
+      CoercG8At ell M R k hell a Lu c α₀ γ₀
+def SidePow6 (ell M : ℕ) (a : ℝ) : Prop :=
+  2 ≤ ell ∧ (∃ m : ℕ, 1 ≤ m ∧ M = ell ^ m) ∧ 0 < a
+def P428Genuine8 (ell M R : ℕ) (hell : 0 < ell) (a : ℝ) : Prop :=
+  SidePow6 ell M a ∧ P428Core8 ell M R hell a
+def P428Target8 : Prop :=
+  ∀ (ell : ℕ) (hell : 2 ≤ ell) (a : ℝ), 0 < a →
+    ∃ m₀ : ℕ, 1 ≤ m₀ ∧ ∀ m : ℕ, m₀ ≤ m → ∃ R₀ : ℕ, ∀ R : ℕ, R₀ ≤ R →
+      P428Genuine8 ell (ell ^ m) R (by omega) a

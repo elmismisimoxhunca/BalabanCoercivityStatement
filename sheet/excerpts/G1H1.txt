@@ -1,0 +1,2 @@
+noncomputable def G1inv : ↥(bondSupp P.G) →L[ℝ] ↥(bondSupp P.G) :=
+  Classical.choose (P.data.exists_G1inv P.data_laws)

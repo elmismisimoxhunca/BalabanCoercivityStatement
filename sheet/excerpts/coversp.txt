@@ -1,0 +1,2 @@
+def CoversOm0p {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  CoversOm0c ell M c k S ∧ CoversPlaqOm0c ell M c k S

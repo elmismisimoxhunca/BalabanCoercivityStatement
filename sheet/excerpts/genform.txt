@@ -1,0 +1,2 @@
+noncomputable def genForm (B : BondFnL2 P.Lu) : ℝ :=
+  firstTerm P B - P.a * ⟪B, B⟫ - 2 * ⟪P.H1in (P.D2in B), P.Jf⟫

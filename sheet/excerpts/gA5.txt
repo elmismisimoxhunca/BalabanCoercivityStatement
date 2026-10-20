@@ -1,0 +1,10 @@
+def DescribedAt {L : PeriodicLatticeExtent} (ell M f k : ℕ) (S : Tower L)
+    (sites : Set (PeriodicLatticeSite L)) (i : ℕ) : Prop :=
+  i ≤ k ∧
+  (∃ z : PeriodicLatticeSite L, GridCorner (bigSide M ell i) z ∧
+      sites = siteBox z (f * bigSide M ell i)) ∧
+  sites ⊆ towerBj S i ∪ towerBj S (i + 1) ∧
+  (sites ∩ towerBj S i).Nonempty
+def IsClassCube {L : PeriodicLatticeExtent} (ell M f k : ℕ) (S : Tower L)
+    (sites : Set (PeriodicLatticeSite L)) (j : ℕ) : Prop :=
+  DescribedAt ell M f k S sites j ∧ ∀ i : ℕ, DescribedAt ell M f k S sites i → i = j

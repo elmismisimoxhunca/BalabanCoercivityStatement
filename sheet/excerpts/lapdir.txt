@@ -1,0 +1,2 @@
+noncomputable def lapDir (G : TowerGeom L) (U : Cfg L) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ((siteMask G.Om0).comp (lapFull U)).comp (siteMask G.Om0)

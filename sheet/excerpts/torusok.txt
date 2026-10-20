@@ -1,0 +1,2 @@
+def TorusOK (ell M : ℕ) (Lu : PeriodicLatticeExtent) : Prop :=
+  (∀ μ : Fin 3, ell ∣ Lu μ + 1) ∧ (∀ μ : Fin 3, ell < Lu μ + 1) ∧ (∀ μ : Fin 3, M ∣ Lu μ + 1)

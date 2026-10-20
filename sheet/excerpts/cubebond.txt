@@ -1,0 +1,2 @@
+def CubeBond {L : PeriodicLatticeExtent} (sites : Set (PeriodicLatticeSite L)) (b : Bond L) : Prop :=
+  b.1 ∈ sites ∧ periodicLatticeShift b.1 b.2 ∈ sites

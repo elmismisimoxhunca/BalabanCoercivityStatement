@@ -1,0 +1,1 @@
+noncomputable def genC : (Bond P.Lu → SuTwo) →ₗ[ℝ] (Bond P.Lu → SuTwo) := Cop P.Lam P.Q1

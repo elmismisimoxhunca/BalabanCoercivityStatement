@@ -1,0 +1,2 @@
+noncomputable def Delta (G : TowerGeom L) (U : Cfg L) : BondFnL2 L →L[ℝ] BondFnL2 L :=
+  AdalyFormal.StatementLaneR6.deltaKLocCLM U (plaqIn G.Om0)

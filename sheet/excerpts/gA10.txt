@@ -1,0 +1,19 @@
+noncomputable def Ginv : E →L[ℝ] E := D.Dpi + D.Ts.comp D.T + D.Mass
+/-- `G` (3.122)/(3.27). -/
+noncomputable def G : E →L[ℝ] E := Ring.inverse D.Ginv
+/-- `H = G Q* (Q G Q*)⁻¹` (3.126). -/
+noncomputable def H : F →L[ℝ] E :=
+  (D.G.comp D.Qs).comp (Ring.inverse ((D.Q.comp D.G).comp D.Qs))
+structure IsG1inv (G1inv : E →L[ℝ] E) : Prop where
+  symm : ∀ x y, ⟪G1inv x, y⟫ = ⟪x, G1inv y⟫
+  form : ∀ A, ⟪A, G1inv A⟫ = D.K A
+noncomputable def G1inv : ↥(bondSupp P.G) →L[ℝ] ↥(bondSupp P.G) :=
+  Classical.choose (P.data.exists_G1inv P.data_laws)
+noncomputable def Qin : BondFnL2 (scaleUp P.ell P.k P.Lu) →L[ℝ] BondFnL2 P.Lu :=
+  P.tau.comp P.sector.Qfull
+noncomputable def H1in : BondFnL2 P.Lu →L[ℝ] BondFnL2 (scaleUp P.ell P.k P.Lu) :=
+  (iE P.G).comp ((P.data.H1 P.G1inv).comp (ContinuousLinearMap.adjoint P.tau))
+noncomputable def D2in (B : BondFnL2 P.Lu) : BondFnL2 P.Lu :=
+  WithLp.toLp 2 (((P.ell : ℝ)⁻¹) • hLift P.Lam P.Q1 (C2tilde P.ell P.unitBgU (WithLp.ofLp B)))
+noncomputable def Q1 : (Bond P.Lu → SuTwo) →ₗ[ℝ] (CoarseBond P.Lu P.ell → SuTwo) :=
+  Q1jet P.ell P.unitBgU

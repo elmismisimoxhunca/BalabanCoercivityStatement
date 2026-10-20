@@ -1,0 +1,2 @@
+noncomputable def H1in : BondFnL2 P.Lu →L[ℝ] BondFnL2 (scaleUp P.ell P.k P.Lu) :=
+  (iE P.G).comp ((P.data.H1 P.G1inv).comp (ContinuousLinearMap.adjoint P.tau))

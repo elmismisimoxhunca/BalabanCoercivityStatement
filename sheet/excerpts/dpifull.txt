@@ -1,0 +1,2 @@
+noncomputable def DpiFull (G : TowerGeom L) (U : Cfg L) (a : ℝ) : BondFnL2 L →L[ℝ] BondFnL2 L :=
+  (ContinuousLinearMap.adjoint (Wop G U a)).comp ((Delta G U).comp (Wop G U a))

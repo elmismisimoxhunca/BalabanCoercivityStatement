@@ -1,0 +1,2 @@
+noncomputable def Qin : BondFnL2 (scaleUp P.ell P.k P.Lu) →L[ℝ] BondFnL2 P.Lu :=
+  P.tau.comp P.sector.Qfull

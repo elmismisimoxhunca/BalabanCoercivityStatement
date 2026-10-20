@@ -1,0 +1,2 @@
+def scaleUp (ell k : ℕ) (Lu : PeriodicLatticeExtent) : PeriodicLatticeExtent :=
+  fun μ => (Lu μ + 1) * ell ^ k - 1

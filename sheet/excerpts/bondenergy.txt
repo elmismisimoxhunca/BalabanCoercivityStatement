@@ -1,0 +1,2 @@
+noncomputable def bondEnergy (A : Bond L → SuTwo) : ℝ :=
+  ∑ b : Bond L, ‖A b‖ ^ 2

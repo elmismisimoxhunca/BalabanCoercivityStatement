@@ -1,0 +1,2 @@
+def SidePow6 (ell M : ℕ) (a : ℝ) : Prop :=
+  2 ≤ ell ∧ (∃ m : ℕ, 1 ≤ m ∧ M = ell ^ m) ∧ 0 < a

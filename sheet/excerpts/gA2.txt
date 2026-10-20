@@ -1,0 +1,13 @@
+def bigSide (M ell j : ℕ) : ℕ := M * ell ^ j
+def BlockClosed {L : PeriodicLatticeExtent} (s : ℕ) (S : Set (PeriodicLatticeSite L)) : Prop :=
+  ∀ x ∈ S, ∀ y : PeriodicLatticeSite L, (∀ μ : Fin 3, (y μ).val / s = (x μ).val / s) → y ∈ S
+def Admissible {L : PeriodicLatticeExtent} (ell M R k : ℕ) (S : Tower L) : Prop :=
+  (∀ j : ℕ, S.Om (j + 1) ⊆ S.Om j) ∧
+  (∀ j : ℕ, k < j → S.Om j = ∅) ∧
+  (∀ j : ℕ, j ≤ k → ∀ μ : Fin 3, bigSide M ell j ∣ (L μ + 1)) ∧
+  (∀ j : ℕ, j ≤ k → BlockClosed (bigSide M ell j) (S.Om j)) ∧
+  (∀ j : ℕ, j ≤ k → ∀ x : PeriodicLatticeSite L, x ∉ S.Om j →
+      ∀ y ∈ S.Om (j + 1), R * bigSide M ell j < pdist x y) ∧
+  (∀ x : PeriodicLatticeSite L, x ∈ S.Om 0 ↔
+      ∃ y ∈ S.Om 1, ∃ z : PeriodicLatticeSite L,
+        (∀ μ : Fin 3, (z μ).val / M = (x μ).val / M) ∧ pdist z y ≤ R * M)

@@ -1,0 +1,6 @@
+noncomputable def Ginv : E →L[ℝ] E := D.Dpi + D.Ts.comp D.T + D.Mass
+/-- `G` (3.122)/(3.27). -/
+noncomputable def G : E →L[ℝ] E := Ring.inverse D.Ginv
+/-- `H = G Q* (Q G Q*)⁻¹` (3.126). -/
+noncomputable def H : F →L[ℝ] E :=
+  (D.G.comp D.Qs).comp (Ring.inverse ((D.Q.comp D.G).comp D.Qs))

@@ -1,0 +1,2 @@
+noncomputable def Rproj (G : TowerGeom L) (U : Cfg L) : SiteL2 L →L[ℝ] SiteL2 L :=
+  (RImage G U).starProjection

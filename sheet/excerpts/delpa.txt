@@ -1,0 +1,2 @@
+noncomputable def DelpA (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ((siteMask G.Om0).comp (lapFull U + Qpa G U a)).comp (siteMask G.Om0)

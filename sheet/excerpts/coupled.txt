@@ -1,0 +1,2 @@
+def ClassCoupled {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) (α₀ η : ℝ) (U : LinkCfg L) : Prop :=
+  CoversOm0p ell M c k S ∧ PerCubeRegular2 ell M c k S α₀ η U

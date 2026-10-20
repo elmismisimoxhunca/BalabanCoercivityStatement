@@ -1,0 +1,3 @@
+def CoversOm0c {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  ∀ x ∈ S.Om 0, ∃ (sites : Set (PeriodicLatticeSite L)) (j : ℕ),
+    IsClassCube ell M c k S sites j ∧ x ∈ sites

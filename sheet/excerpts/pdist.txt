@@ -1,0 +1,2 @@
+def pdist {L : PeriodicLatticeExtent} (x y : PeriodicLatticeSite L) : ℕ :=
+  ∑ μ : Fin 3, pcd (L μ + 1) (x μ).val (y μ).val

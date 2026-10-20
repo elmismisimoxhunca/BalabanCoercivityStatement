@@ -1,0 +1,4 @@
+def CoversPlaqOm0c {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  ∀ p : PeriodicLatticePlaquette L, (∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond (S.Om 0) e) →
+    ∃ (sites : Set (PeriodicLatticeSite L)) (j : ℕ), IsClassCube ell M c k S sites j ∧
+      ∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond sites e

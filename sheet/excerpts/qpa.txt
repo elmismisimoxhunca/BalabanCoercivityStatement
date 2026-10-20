@@ -1,0 +1,4 @@
+noncomputable def Qpa (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  ∑ j ∈ Finset.range (G.k + 1), ∑ y : PeriodicLatticeSite L,
+    if y ∈ G.Lam j then (ajSeq a G.ell j * (G.ell : ℝ) ^ j) •
+      ((ContinuousLinearMap.adjoint (Qlev G U j y)).comp (Qlev G U j y)) else 0

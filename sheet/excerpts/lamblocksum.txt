@@ -1,0 +1,2 @@
+def LamBlockSum {Lu : PeriodicLatticeExtent} (ell : ℕ) (Lam : Set (PeriodicLatticeSite Lu)) : Prop :=
+  ∀ x ∈ Lam, ∃ y ∈ LamPrime ell Lam, x ∈ blockOf y ell

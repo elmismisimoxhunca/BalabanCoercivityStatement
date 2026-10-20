@@ -1,0 +1,7 @@
+def LambdaOK {Lu Lf : PeriodicLatticeExtent} (ell M R k : ℕ) (S : Tower Lf)
+    (Lam : Set (PeriodicLatticeSite Lu)) : Prop :=
+  BlockClosed M Lam ∧
+  ∃ emb : PeriodicLatticeSite Lu → PeriodicLatticeSite Lf,
+    (∀ y μ, (emb y μ).val = (ell ^ k) * (y μ).val) ∧
+    (∀ y ∈ Lam, emb y ∈ S.Om k) ∧
+    (∀ y ∈ Lam, ∀ y' : PeriodicLatticeSite Lu, emb y' ∉ S.Om k → R * M < pdist y y')

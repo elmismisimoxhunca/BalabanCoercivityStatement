@@ -1,0 +1,4 @@
+noncomputable def ddA {L : PeriodicLatticeExtent} (η : ℝ) (A : Bond L → Matrix (Fin 2) (Fin 2) ℂ)
+    (x : PeriodicLatticeSite L) (μ : Fin 3) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (η⁻¹ : ℝ) • ∑ ν ∈ Finset.univ.filter (fun ν : Fin 3 => ν ≠ μ),
+    (curlA η A (periodicLatticeShiftBack x ν) ν μ - curlA η A x ν μ)

@@ -1,0 +1,4 @@
+abbrev gparams (ell k : ℕ) (Lu : PeriodicLatticeExtent) (hell : 0 < ell)
+    (S : Tower (scaleUp ell k Lu)) (U : LinkCfg (scaleUp ell k Lu)) (a : ℝ)
+    (Lam : Set (PeriodicLatticeSite Lu)) : IngrBParams :=
+  ⟨ell, k, Lu, hell, S, U, a, Lam⟩

@@ -1,0 +1,6 @@
+def InstIneq (ell k : ℕ) (hell : 0 < ell) (a : ℝ) (Lu : PeriodicLatticeExtent) (γ₀ : ℝ)
+    (S : Tower (scaleUp ell k Lu)) (Lam : Set (PeriodicLatticeSite Lu)) (U : LinkCfg (scaleUp ell k Lu)) : Prop :=
+  ∀ (Bt : Bond Lu → SuTwo), OnLambdaTildeIn Lam ell Bt → OnLambdaT Lam Bt →
+    γ₀ * bondEnergy Bt ≤
+      GenP.genForm (gparams ell k Lu hell S U a Lam)
+        (WithLp.toLp 2 (GenP.genC (gparams ell k Lu hell S U a Lam) Bt))

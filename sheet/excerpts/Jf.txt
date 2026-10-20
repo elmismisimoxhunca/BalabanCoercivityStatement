@@ -1,0 +1,2 @@
+noncomputable def Jf : BondFnL2 (scaleUp P.ell P.k P.Lu) :=
+  WithLp.toLp 2 (fun b => -(AdalyFormal.IngredientFamily.JSU2Loc 1 (plaqIn P.G.Om0) P.U b))

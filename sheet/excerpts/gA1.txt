@@ -1,0 +1,8 @@
+def scaleUp (ell k : ℕ) (Lu : PeriodicLatticeExtent) : PeriodicLatticeExtent :=
+  fun μ => (Lu μ + 1) * ell ^ k - 1
+def pcd (N a b : ℕ) : ℕ :=
+  min (if a ≤ b then b - a else a - b) (N - (if a ≤ b then b - a else a - b))
+def pdist {L : PeriodicLatticeExtent} (x y : PeriodicLatticeSite L) : ℕ :=
+  ∑ μ : Fin 3, pcd (L μ + 1) (x μ).val (y μ).val
+def TorusOK (ell M : ℕ) (Lu : PeriodicLatticeExtent) : Prop :=
+  (∀ μ : Fin 3, ell ∣ Lu μ + 1) ∧ (∀ μ : Fin 3, ell < Lu μ + 1) ∧ (∀ μ : Fin 3, M ∣ Lu μ + 1)

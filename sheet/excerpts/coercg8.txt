@@ -1,0 +1,8 @@
+def CoercG8At (ell M R k : ℕ) (hell : 0 < ell) (a : ℝ) (Lu : PeriodicLatticeExtent)
+    (c : ℕ) (α₀ γ₀ : ℝ) : Prop :=
+  TorusOK ell M Lu →
+  ∀ (S : Tower (scaleUp ell k Lu)), Admissible ell M R k S →
+  ∀ (Lam : Set (PeriodicLatticeSite Lu)), LambdaOK2 ell M R k S Lam →
+  ∀ (U : LinkCfg (scaleUp ell k Lu)),
+    ClassCoupled ell M c k S α₀ ((ell : ℝ) ^ k)⁻¹ U →
+    InstIneq ell k hell a Lu γ₀ S Lam U

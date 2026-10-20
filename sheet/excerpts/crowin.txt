@@ -1,0 +1,3 @@
+def CRowIn {Lu : PeriodicLatticeExtent} (ell : ℕ) (Lam : Set (PeriodicLatticeSite Lu))
+    (c : CoarseBond Lu ell) : Prop :=
+  c.1.1 ∈ LamPrime ell Lam ∨ AdalyFormal.Balaban.CoarseCurl.coarseShift c.1.1 ell c.2 ∈ LamPrime ell Lam

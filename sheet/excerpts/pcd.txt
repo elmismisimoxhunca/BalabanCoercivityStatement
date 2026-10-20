@@ -1,0 +1,2 @@
+def pcd (N a b : ℕ) : ℕ :=
+  min (if a ≤ b then b - a else a - b) (N - (if a ≤ b then b - a else a - b))

@@ -1,0 +1,2 @@
+def P428Genuine8 (ell M R : ℕ) (hell : 0 < ell) (a : ℝ) : Prop :=
+  SidePow6 ell M a ∧ P428Core8 ell M R hell a

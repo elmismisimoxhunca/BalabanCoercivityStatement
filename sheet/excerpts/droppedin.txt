@@ -1,0 +1,3 @@
+def IsDroppedIn {Lu : PeriodicLatticeExtent} (Lam : Set (PeriodicLatticeSite Lu)) (ell : ℕ)
+    (b : Bond Lu) : Prop :=
+  ∃ c : CoarseBond Lu ell, CRowIn ell Lam c ∧ b = droppedBondLast ell c

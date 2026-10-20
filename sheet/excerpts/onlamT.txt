@@ -1,0 +1,3 @@
+def OnLambdaT {Lu : PeriodicLatticeExtent} (Lam : Set (PeriodicLatticeSite Lu))
+    (B : Bond Lu → SuTwo) : Prop :=
+  ∀ b : Bond Lu, ¬ (b.1 ∈ Lam ∨ periodicLatticeShift b.1 b.2 ∈ Lam) → B b = 0

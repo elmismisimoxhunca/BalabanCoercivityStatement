@@ -1,0 +1,7 @@
+def AdmNoBase {L : PeriodicLatticeExtent} (ell M R k : ℕ) (S : Tower L) : Prop :=
+  (∀ j : ℕ, S.Om (j + 1) ⊆ S.Om j) ∧
+  (∀ j : ℕ, k < j → S.Om j = ∅) ∧
+  (∀ j : ℕ, j ≤ k → ∀ μ : Fin 3, bigSide M ell j ∣ (L μ + 1)) ∧
+  (∀ j : ℕ, j ≤ k → BlockClosed (bigSide M ell j) (S.Om j)) ∧
+  (∀ j : ℕ, j ≤ k → ∀ x : PeriodicLatticeSite L, x ∉ S.Om j →
+      ∀ y ∈ S.Om (j + 1), R * bigSide M ell j < pdist x y)

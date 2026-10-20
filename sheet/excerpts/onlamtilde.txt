@@ -1,0 +1,4 @@
+def OnLambdaTildeIn {Lu : PeriodicLatticeExtent} (Lam : Set (PeriodicLatticeSite Lu)) (ell : ℕ)
+    (B : Bond Lu → SuTwo) : Prop :=
+  (∀ y ∈ LamPrime ell Lam, ∀ x ∈ blockOf y ell, ∀ b ∈ staircasePath y x, B b = 0) ∧
+  (∀ b : Bond Lu, IsDroppedIn Lam ell b → B b = 0)

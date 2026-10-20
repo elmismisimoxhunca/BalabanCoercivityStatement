@@ -1,0 +1,2 @@
+def BlockClosed {L : PeriodicLatticeExtent} (s : ℕ) (S : Set (PeriodicLatticeSite L)) : Prop :=
+  ∀ x ∈ S, ∀ y : PeriodicLatticeSite L, (∀ μ : Fin 3, (y μ).val / s = (x μ).val / s) → y ∈ S

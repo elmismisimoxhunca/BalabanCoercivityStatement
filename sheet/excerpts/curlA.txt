@@ -1,0 +1,4 @@
+noncomputable def curlA {L : PeriodicLatticeExtent} (η : ℝ) (A : Bond L → Matrix (Fin 2) (Fin 2) ℂ)
+    (x : PeriodicLatticeSite L) (a b : Fin 3) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (η⁻¹ : ℝ) • (A (periodicLatticeShift x a, b) - A (x, b)
+    - A (periodicLatticeShift x b, a) + A (x, a))

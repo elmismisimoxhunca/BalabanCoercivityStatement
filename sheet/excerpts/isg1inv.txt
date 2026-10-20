@@ -1,0 +1,3 @@
+structure IsG1inv (G1inv : E →L[ℝ] E) : Prop where
+  symm : ∀ x y, ⟪G1inv x, y⟫ = ⟪x, G1inv y⟫
+  form : ∀ A, ⟪A, G1inv A⟫ = D.K A

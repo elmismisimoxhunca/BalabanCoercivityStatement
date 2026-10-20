@@ -1,0 +1,2 @@
+noncomputable def D2in (B : BondFnL2 P.Lu) : BondFnL2 P.Lu :=
+  WithLp.toLp 2 (((P.ell : ℝ)⁻¹) • hLift P.Lam P.Q1 (C2tilde P.ell P.unitBgU (WithLp.ofLp B)))

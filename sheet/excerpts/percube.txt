@@ -1,0 +1,20 @@
+def PerCubeRegular2 {L : PeriodicLatticeExtent} (ell M f k : ℕ) (S : Tower L)
+    (α₀ η : ℝ) (U : LinkCfg L) : Prop :=
+  ∀ (sites : Set (PeriodicLatticeSite L)) (j : ℕ), IsClassCube ell M f k S sites j →
+    ∃ (g : PeriodicLatticeSite L → Matrix.specialUnitaryGroup (Fin 2) ℂ)
+      (A : Bond L → Matrix (Fin 2) (Fin 2) ℂ),
+      (∀ e : Bond L, CubeBond sites e →
+        HT (A e) ∧
+        ((periodicGaugeTransform g U e : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
+            Matrix (Fin 2) (Fin 2) ℂ)
+          = NormedSpace.exp (((η : ℂ) * Complex.I) • A e) ∧
+        frobNorm (A e) < (f : ℝ) * M * α₀ * (((ell : ℝ) ^ j * η)⁻¹ ^ 1)) ∧
+      (∀ (μ ν : Fin 3) (x : PeriodicLatticeSite L),
+        CubeBond sites ((x, ν) : Bond L) → CubeBond sites ((periodicLatticeShift x μ, ν) : Bond L) →
+        frobNorm ((η⁻¹ : ℝ) • (A (periodicLatticeShift x μ, ν) - A (x, ν)))
+          < (f : ℝ) * M * α₀ * (((ell : ℝ) ^ j * η)⁻¹ ^ 2)) ∧
+      (∀ (μ : Fin 3) (x : PeriodicLatticeSite L),
+        (∀ ν : Fin 3, ν ≠ μ → CurlReads sites (periodicLatticeShiftBack x ν) ν μ ∧
+          CurlReads sites x ν μ) →
+        frobNorm (ddA η A x μ)
+          < (f : ℝ) * M * α₀ * (((ell : ℝ) ^ j * η)⁻¹ ^ 3))

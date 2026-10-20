@@ -1,0 +1,2 @@
+noncomputable def Gp (G : TowerGeom L) (U : Cfg L) (a : ℝ) : SiteL2 L →L[ℝ] SiteL2 L :=
+  (Ring.inverse (DelpA G U a + (1 - siteMask G.Om0))).comp (siteMask G.Om0)

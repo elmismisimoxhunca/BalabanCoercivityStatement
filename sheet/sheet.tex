@@ -1,0 +1,199 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1.45cm,top=1.3cm,bottom=1.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\DeclareUnicodeCharacter{00AC}{\ensuremath{\neg}}
+\DeclareUnicodeCharacter{00B9}{\textsuperscript{1}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B7}{\ensuremath{\eta}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03BD}{\ensuremath{\nu}}
+\DeclareUnicodeCharacter{2016}{\ensuremath{\Vert}}
+\DeclareUnicodeCharacter{2022}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{207B}{\textsuperscript{-}}
+\DeclareUnicodeCharacter{2080}{\textsubscript{0}}
+\DeclareUnicodeCharacter{2097}{\textsubscript{l}}
+\DeclareUnicodeCharacter{2102}{\ensuremath{\mathbb{C}}}
+\DeclareUnicodeCharacter{2115}{\ensuremath{\mathbb{N}}}
+\DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+\DeclareUnicodeCharacter{21A5}{\ensuremath{\uparrow}}
+\DeclareUnicodeCharacter{2200}{\ensuremath{\forall}}
+\DeclareUnicodeCharacter{2203}{\ensuremath{\exists}}
+\DeclareUnicodeCharacter{2205}{\ensuremath{\emptyset}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{2211}{\ensuremath{\sum}}
+\DeclareUnicodeCharacter{2218}{\ensuremath{\circ}}
+\DeclareUnicodeCharacter{2223}{\ensuremath{\mid}}
+\DeclareUnicodeCharacter{2227}{\ensuremath{\wedge}}
+\DeclareUnicodeCharacter{2228}{\ensuremath{\vee}}
+\DeclareUnicodeCharacter{2229}{\ensuremath{\cap}}
+\DeclareUnicodeCharacter{222A}{\ensuremath{\cup}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{27E8}{\ensuremath{\langle}}
+\DeclareUnicodeCharacter{27E9}{\ensuremath{\rangle}}
+\DeclareUnicodeCharacter{27EA}{\ensuremath{\langle\!\langle}}
+\DeclareUnicodeCharacter{27EB}{\ensuremath{\rangle\!\rangle}}
+\usepackage{amsmath,amssymb}
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{longtable,array,booktabs}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}\setlength{\parskip}{2pt}
+\setlist{nosep,leftmargin=1.2em}
+\pagestyle{plain}
+\input{ranges.tex}
+\renewcommand{\ttdefault}{lmtt}
+\newcommand{\lean}[1]{\begingroup\setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}\par\VerbatimInput[fontsize=\fontsize{6}{6.7}\selectfont,frame=lines,framesep=0.6mm,label={\sffamily\fontsize{5.5}{6}\selectfont\csname rng-#1\endcsname},labelposition=topline,rulecolor=\color{gray!55}]{excerpts/#1.txt}\endgroup}
+\newcommand{\prt}[2]{\par{\sffamily\scriptsize\textbf{Print.} #1}\par{\small\itshape #2}\par}
+\newcommand{\tr}[1]{\par{\sffamily\scriptsize\textbf{In words.}} #1}
+\newcommand{\dev}[1]{\par{\sffamily\scriptsize\textbf{Deviation.}} #1}
+\newcommand{\chk}[1]{\par{\sffamily\scriptsize\textbf{Check (yes/no).}} #1}
+\newcommand{\clause}[1]{\vspace{4pt}\par\noindent{\sffamily\bfseries\color{blue!40!black}#1}\par\nopagebreak\hrule\vspace{1pt}}
+\let\oldus\_\renewcommand{\_}{\oldus\allowbreak}
+\sloppy\newcommand{\bal}{Bala\-ban}
+\newcommand{\Lu}{\mathrm{Lu}}
+\newcommand{\Lam}{\Lambda}
+\title{\vspace{-8mm}\sffamily\large Statement sheet: does the frozen Lean statement say what Bala\-ban's printed lemma says?}
+\date{}\author{}
+\begin{document}
+\maketitle\vspace{-12mm}
+\fontsize{8.6}{10.2}\selectfont
+\textbf{Object.} The Lean proposition \texttt{AdalyFormal.StatementLaneG.P428Target8} against the sentence on p.\,428 of Bala\-ban, \emph{Propagators for lattice gauge theories in a background field}, CMP 99 (1985) (CMP99b below): ``a positive definite operator $C^*\Delta_kC$ with a lower bound $\gamma_0>0$ independent of $k$ and $U$\,\dots\ for an arbitrary configuration $U$ satisfying (3.35), (3.36) with $M\alpha_0$ sufficiently small''.\ This sheet is meant to be read alone. Part A has one block per clause (print, Lean, plain words, deviation, a yes/no question). Part B writes the whole statement in ordinary notation with the quantifier order. Part C lists the readings a reader might reject, what changes, and which proved variant covers the alternative.
+
+\textbf{Conventions.} \emph{Print locations.} ``p.\,396, l.\,6--10'' counts text lines of the printed page from the first line under the running head, displays not counted; for other pages \texttt{pN:lM} gives the page $N$ and a line number $M$ of a page transcription (not included here); quotes are verbatim, mathematics in \TeX. \emph{Lean locations} are of the excerpt; full paths are in the appendix. \emph{Deviation ids} (D1--D12, N1--N6, $\surd2$) are short labels for the deviations listed in each row. In Lean, a field of ``extent'' $L_\mu$ means $L_\mu+1$ sites; $\ell$ is Bala\-ban's $L$.
+
+\section*{Part A. Clause by clause}
+
+\clause{A1\quad Lattice, torus, scale, distance}
+\prt{CMP96 p.223 (\texttt{CMP96\_p223:l62}): ``a distance between two points $x,y\in\eta Z^d$, $\eta>0$, is given by the $l^1$-norm of the vector $x-y$ and is denoted by $|x-y|$, i.e.\ $|x-y|=\sum_{\mu=1}^d|x_\mu-y_\mu|$''. Domains: $\Omega_j\subset T_\eta$ (p.393, CMP96 p.224 (2.1)). Unit lattice: $\Lambda\subset\Lambda_k=\Omega_k^{(k)}$ (p.427, \texttt{p427:l39}).}{The print does not say the lattice is periodic, nor its dimension in this clause, nor the value of $\eta$.}
+\lean{gA1}
+\tr{The unit torus has $\Lu\,\mu+1$ sites per direction; the fine torus (carrying $U$ and the tower) has $\ell^k$ times as many, so the fine spacing is $\eta=\ell^{-k}$ (it appears below as \texttt{((ell:ℝ)\^{}k)⁻¹}). Distance is the sum over the three axes of the shorter way round the circle. \texttt{TorusOK}: $\ell$ and $M$ divide every unit side, and $\ell<$ side.}
+\dev{Dimension 3, group SU(2), periodic torus, $\eta=\ell^{-k}$ and the wrap-around in the distance are conventions not printed. \texttt{TorusOK}: row D7 (fewer tori; blocking hygiene).}
+\chk{Is it acceptable, for this lemma, to work on a 3-torus with $\eta=\ell^{-k}$ and periodic $l^1$ distance, for tori whose sides are multiples of $\ell$ and $M$?}
+
+\clause{A2\quad The tower $\Omega_0\supset\dots\supset\Omega_k$ (\texttt{Admissible})}
+\prt{CMP96 p.224 (\texttt{CMP96\_p224:l38--54}): ``We consider a sequence of domains $\Omega_1\supset\Omega_2\supset\ldots\supset\Omega_k$, $\Omega_j\subset T_\eta$\,\dots\ $\Omega_j=B^j(\Omega_j^{(j)})$, $\Omega_j^{(j)}\subset T^{(j)}_{L^j\eta}$ and it is a sum of big blocks, $(L^j\eta)^{-1}\mathrm{dist}(\Omega_j^c,\Omega_{j+1})>RM$, $M$ is a size of big blocks and $R$ is a big positive integer which will be fixed later.'' CMP99b p.393 (\texttt{p393:l22--40}): ``the sequence (2.1) starts with $\Omega_0$, thus we have $\Omega_0\supset\Omega_1\supset\cdots\supset\Omega_k$\,\dots\ $\Omega_{k+1}=\varnothing$\,\dots\ The condition (2.2) is unchanged.'' Big blocks: p.408 (\texttt{p408:l29}): ``elementary cubes (cells) of the lattice $ML^j\eta Z^d$''.}{}
+\lean{gA2}
+\tr{Clauses in order: (1) nested; (2) empty above level $k$; (3) a level-$j$ block (side $M\ell^j$ fine sites) tiles each side; (4) each $\Omega_j$ is a union of such blocks; (5) a point outside $\Omega_j$ is at distance $>RM\ell^j$ (fine sites; equivalently $>RM$ in units of $\ell^j$) from $\Omega_{j+1}$; (6) $\Omega_0$ is the union of the $M$-blocks having a site within $RM$ of $\Omega_1$.}
+\dev{Clause (6) is the p.396 choice of $\Omega_0$ (A3). Clauses (3), tiling and padding above $k$ are not printed (N4); $\ell^1$ periodic distance (N4); block side read as $M\ell^j$ fine sites (p.408). Row N3/N4: identical to the printed conditions under reading A of $T_1$ (Lean \texttt{RBridge.admissible\_iff\_print}); see Part C.}
+\chk{(a) Are big blocks at level $j$ cubes of side $M\ell^j$ fine sites? (b) Is the collar of (2.2) strict ($>$) in fine sites $R\cdot M\ell^j$?}
+
+\clause{A3\quad The innermost domain $\Omega_0$ and $\Lambda_0$ (last clause of \texttt{Admissible})}
+\prt{CMP99b p.396, l.10--12: ``The set $\Lambda_0$ in the above condition means $\Lambda_0=\Omega_0\backslash\Omega_1$, where $\Omega_0=\{$a union of big blocks of the lattice $T_1$, such that their distances to $\Omega_1$ are $\le RM\}$.'' p.394 (\texttt{p394:l74--77}): ``Let us introduce a domain $\Omega_0$ such that $\Omega_1\subset\Omega_0$ and $\Omega_0$ is a union of big blocks of the lattice $T_1$, e.g.\ we may take $\Omega_0=\{$a union of big blocks in $T_1$, with distances to $\Omega_1\leqq RM\}$, or we may add to $\Omega_1$ a thinner layer of the big blocks surrounding $\Omega_1$.''}{}
+\tr{Lean (the last conjunct of the excerpt in A2): $\Omega_0$ is exactly the set of $M$-blocks at distance $\le RM$ from $\Omega_1$; $\Lambda_0=\Omega_0\setminus\Omega_1$ is the stratum of index $0$ (A5).}
+\dev{Two readings are made: $T_1$ is the fine lattice in its own unit spacing (``reading A''; the alternative ``reading B'' takes $T_1$ as the level-$k$ unit lattice); and p.394 allows a thinner layer, while Lean fixes the $\le RM$ layer. Rows N3, N4; Part C items 1--2.}
+\chk{Is ``$T_1$'' in the sentence on p.396 the fine lattice at spacing one fine site (blocks of $M$ fine sites, radius $RM$ fine sites)?}
+
+\clause{A4\quad The region $\Lambda$ (\texttt{LambdaOK2})}
+\prt{CMP99b p.427 (\texttt{p427:l39}): ``We assume that $\Lambda\subset\Lambda_k=\Omega_k^{(k)}$, $\Lambda$ is a union of big blocks, and a distance between $\Lambda$ and $\Lambda_k^c$ is bigger than $RM$.'' CMP96 p.245, Lemma 2.4 (\texttt{CMP96\_p245:l95}): ``Let a set $\Lambda\subset Z^d$ be a sum of blocks, $\Lambda=B(\Lambda')$.''}{}
+\lean{gA4}
+\tr{$\Lambda$ is a set of unit-torus sites, a union of $M$-blocks; scaling a unit site $y$ to the fine site $\ell^ky$ lands in $\Omega_k$; every unit site $y'$ whose image is not in $\Omega_k$ is farther than $RM$ (unit sites) from every site of $\Lambda$; and $\Lambda$ is the union of the $\ell$-blocks lying inside it ($\Lambda=B(\Lambda')$). The empty $\Lambda$ is allowed.}
+\dev{Row N2: equal to the print; $\Lambda=\varnothing$ allowed (inequality then trivial, \texttt{OneGap.instIneq\_empty}). The collar uses the same $R$ as the tower; this is matched by reading, not by a theorem.}
+\chk{Is ``$R M$ in the unit lattice'' the same $R$ as in the tower condition (2.2)?}
+
+\clause{A5\quad The class of cubes (\texttt{IsClassCube})}
+\prt{CMP99b p.396, l.6--10: ``For each cube $\square$ of this class there exists a unique index $j$, $0\le j\le k$, such that $\square\subset B^j(\Lambda_j)\cup B^{j+1}(\Lambda_{j+1})$, $\square\cap B^j(\Lambda_j)\ne\emptyset$, and $\square$ is a union of several big blocks of the lattice $T_{L^{-j}}$, which implies that its size in the lattice $T_\eta$ is $O(1)ML^j\eta$. Here $O(1)$ will mean a number $\ge10$.'' p.408/409 (\texttt{p408:l31}, \texttt{p409:l20}): ``We have assumed that the number $O(1)$ in the condition (3.35) can be taken as equal to 12''.}{}
+\lean{gA5}
+\tr{With a cube factor $f$: a class cube of index $i$ is the box of side $f\cdot M\ell^i$ fine sites whose corner has coordinates divisible by $M\ell^i$, lying in $(\Omega_i\setminus\Omega_{i+1})\cup(\Omega_{i+1}\setminus\Omega_{i+2})$, meeting $\Omega_i\setminus\Omega_{i+1}$, with $i$ the only index for which this holds. (Here $B^j(\Lambda_j)=\Omega_j\setminus\Omega_{j+1}$, p.393.) The headline uses the single number $f=12$.}
+\dev{D3: the print attaches $O(1)\ge10$ to each cube and says ``union of several big blocks''; Lean takes one number for all cubes and boxes of $f$ blocks per side. Proved variants with a free factor, per-cube factors, and unions of blocks: Part C, items 3--4. The scale ``$T_{L^{-j}}$'' is read as blocks of $M\ell^j$ fine sites.}
+\chk{Is fixing one cube factor ($12$, as p.409 says) and taking cubes to be boxes an acceptable reading of the p.396 class for this lemma?}
+
+\clause{A6\quad The regularity class (3.35), (3.36) (\texttt{PerCubeRegular2})}
+\prt{CMP99b p.396 (\texttt{p396:l35--48}): ``for an arbitrary cube $\square$ of the described above class, and for a configuration $U$ there exists a gauge transformation $u$ on $\square$ such that $U^u=e^{i\eta A}$, and if the index of $\square$ is $j$, then $|A|<O(1)M\alpha_0(L^j\eta)^{-1}$, $|\nabla^\eta A|<O(1)M\alpha_0(L^j\eta)^{-2}$ on $\square$, where $O(1)M$ is a size of $\square$ in $T_{L^{-j}}$; $|\partial^{\eta*}\partial^\eta A|<O(1)M\alpha_0(L^j\eta)^{-3}$ on $\square$.'' (3.35), (3.36). Bonds of a set: CMP96 p.224 (\texttt{CMP96\_p224:l61}): ``bonds $b\subset T_\eta$: at least one end-point of $b$ belongs to $\Omega$''.}{}
+\lean{gA6}
+\tr{$U$ is regular with parameter $\alpha_0$ if for every class cube (index $j$) \emph{there are} a gauge transformation $g$ and a Hermitian traceless field $A$ with $U^g=\exp(i\eta A)$ on the bonds of the cube, $\|A\|<fM\alpha_0(\ell^j\eta)^{-1}$, the forward difference of $A$ (divided by $\eta$) is $<fM\alpha_0(\ell^j\eta)^{-2}$ where both bonds are in the cube, and $\partial^*\partial A$, written as the lattice curl-of-curl \texttt{ddA}, is $<fM\alpha_0(\ell^j\eta)^{-3}$ where all bonds it reads are in the cube. $g$ and $A$ depend on the cube.}
+\dev{N6: ``$\exists g,A$ per cube'' equals the print. $\surd2$: norm of $A$ is the full-matrix Frobenius norm, $\sqrt2$ times the printed norm (absorbed in $\alpha_0$). D9: $\partial^*\partial$ replaced by the curl form. Bond convention: \texttt{CubeBond} needs \emph{both} endpoints in the cube; CMP96 p.224 says \emph{at least one}. Part C, item 5.}
+\chk{(a) Is the existential gauge $g$ chosen per cube, inside the ``for every cube''? (b) Is ``bonds of the cube $=$ both endpoints in the cube'' acceptable for the class conditions?}
+
+\clause{A7\quad Coverage and the single hypothesis on $U$ (\texttt{ClassCoupled})}
+\prt{CMP99b p.396, l.after the display (\texttt{p396:l51}): ``Let us notice that these regularity conditions do not impose any constraints on $U$ outside the domain $\Omega_0$.''}{Coverage is not printed.}
+\lean{gA7}
+\tr{Every site of $\Omega_0$ lies in a class cube of factor $c$; every plaquette whose four boundary bonds lie in $\Omega_0$ has its four bonds in one class cube of factor $c$; and $U$ is regular on all class cubes with the same $c$. The hypothesis on $U$ in the lemma is this conjunction.}
+\dev{D2: an added hypothesis (the print says the conditions constrain $U$ only inside $\Omega_0$; Lean reads: they constrain $U$ throughout $\Omega_0$). It restricts the towers. Without it the encoded statement is false (Part C, item 6).}
+\chk{Is ``the class cubes cover $\Omega_0$ (sites and plaquettes)'' a fair reading of ``the conditions are imposed on $\Omega_0$''?}
+
+\clause{A8\quad Site operators: $\Delta'_a$, $G'$, $R$, $W$, $\Delta_\pi$}
+\prt{CMP99b p.394 (\texttt{p394:l60--84}): ``$\Delta'_a=(\Delta^\eta_U+Q'^*aQ')\!\upharpoonright_{\Omega_0}$\,\dots\ $\langle\lambda,Q'^*aQ'\lambda\rangle=\sum_{j=0}^ka_j\sum_{y\in\Lambda_j}(L^j\eta)^{d-2}|(Q'_j(U)\lambda)(y)|^2$ (3.24), $a_{j+1}=aa_j/(aL^{-2}+a_j)$, $a_1=a_0=a>0$\,\dots\ $\Delta'_a\!\upharpoonright_{\Omega_0}=\Omega_0\Delta'_a\Omega_0$\,\dots\ Its inverse is denoted by $G'$''. (3.21) $R$ is the orthogonal projection onto $\Delta_UN(Q')$ (p.394). (3.119) p.419: $\langle A,\Delta_\pi A\rangle=\langle A-DG'RD^*A,\Delta(A-DG'RD^*A)\rangle$.}{}
+\lean{gA8}
+\tr{The tower geometry ($\Omega_0$ and the strata $\Lambda_j$ at coarse sites) is read off the tower. \texttt{Qpa} is the mass term (3.24); \texttt{DelpA} is $\Omega_0(\Delta+Q'^*aQ')\Omega_0$; \texttt{Gp} is its inverse on $L^2(\Omega_0)$, extended by zero; $R$ is the projection onto $\Delta_UN(Q')$ with Dirichlet Laplacian (\texttt{lapDir}); $W=I-DG'RD^*$; $\Delta_\pi=W^*\Delta W$. \texttt{Ring.inverse} is Lean's inverse, with value $0$ where there is none.}
+\dev{D10, D11: the averaging operators $Q_j(U)$ come from the one-step jets of the print's (3.13)--(3.15), per component; convention, bridged but not re-derived. The Lean body is written at $\eta=1$ (``$\eta$-free''; see A12). Not pinned to a printed page: that the weights $L^{j(d-2)}$ versus \texttt{ell\^{}j} in \texttt{Qpa} equal the print's in $d=3$.}
+\chk{Do \texttt{DelpA}, \texttt{Gp}, \texttt{Wop}, \texttt{DpiFull} correspond to (3.24), the inverse $G'$, $W$ of (3.119), with Dirichlet conditions on $\Omega_0^c$?}
+
+\clause{A9\quad The operators $\Delta$, $J$ and the plaquette selection}
+\prt{CMP99b p.392 (\texttt{p392:l87--104}): $\langle A,\Delta A\rangle=\langle A,D^*DA\rangle+\langle A,\Delta'A\rangle$, $\langle A,\Delta'A\rangle=\sum_{p\subset T_\eta}\eta^d\mathrm{tr}((D^1_UA)(p))^2\eta^{-2}(\mathrm{Re}\,U(\partial p)-1)+\dots$ (3.10); $\langle A,J\rangle=\sum_{b\subset T_\eta}\eta^d\mathrm{tr}A(b)J(b)$, $J=D^*\eta^{-2}\mathrm{Im}\,\partial U$ (3.11). p.394 (\texttt{p394:l81--84}): ``They depend on the configuration $U$ restricted to $\Omega_0$\,\dots\ All operators we will consider will be defined by using Dirichlet boundary conditions on $\Omega_0$.''}{The print sums (3.10), (3.11) over \emph{all} plaquettes of $T_\eta$.}
+\lean{gA9}
+\tr{$\Delta$ and $J$ are summed only over plaquettes whose four boundary bonds have both endpoints in $\Omega_0$, so they read $U$ only on $\Omega_0$. ($J$ carries the sign of the chart used for $\mathfrak{su}(2)$.)}
+\dev{D1: a chosen reading of p.394, not the printed sums. Two literal alternatives (all plaquettes; a bond mask inside $W^*\Delta W$) are refuted by Lean theorems (Part C, item 7).}
+\chk{Is localising $\Delta$ and $J$ to plaquettes inside $\Omega_0$ an acceptable meaning of ``the operators depend on $U$ restricted to $\Omega_0$''?}
+
+\clause{A10\quad $G_1$, $H_1$, $\tilde D^{(2)}$, $Q$, $Q_1$ (the pieces of (3.156))}
+\prt{CMP99b (3.126) p.420 (\texttt{p420:l82}): $HB=GQ^*(QGQ^*)^{-1}B$. (3.128) p.421 (\texttt{p421:l30}): $\langle A,G_1^{-1}A\rangle=\langle A,\Delta_\pi A\rangle-2\langle HC^{(2)}_\pi(A),J\rangle+\|RD^*A\|^2+a\|QA\|^2$; (3.129): $H_1B=G_1Q^*(QG_1Q^*)^{-1}B$. $G=(\Delta_\pi+DRD^*+Q^*aQ)^{-1}$ (3.122) p.420.}{}
+\lean{gA10}
+\tr{$G^{-1}=\Delta_\pi+DRD^*+Q^*aQ$ and $G$ its inverse. $G_1^{-1}$ is \emph{the} symmetric operator whose quadratic form is the right side of (3.128) (the Lean choice is the unique such operator, proved to exist); $G_1$ its inverse. $H_1$, $\tilde D^{(2)}$ (a quadratic map built from the second-order term of the averaging, divided by $\ell$), $J$ and the unit-level $Q_1$ (the linear part of the one-step averaging, divided by $\ell$) are built from the same ingredients; $Q$ is the multi-level constraint operator followed by $\tau$, which reads the top level.}
+\dev{D10, D11 (jets, convention). The embedding $\tau$ and the placing of $B$ at the top level are not in the print (A12). Not pinned: the identification of $\tilde D^{(2)}=hC^{(2)}$ with $h=L^{-1}\iota H_0^{-1}\rho$ (cited in the Lean comment to CMP109 p.267, a paper outside the corpus pages used here).}
+\chk{Does the chain $G^{-1}\to G\to G_1^{-1}\to G_1\to H_1$ with $QG_1Q^*$ inverted follow (3.122), (3.126)--(3.129)?}
+
+\clause{A11\quad The subspace, $\tilde B$ and the operator $C$}
+\prt{CMP99b p.428 (\texttt{p428:l35}): ``This form is considered on the subspace $\{B:B=0\text{ on }\Lambda^c,\ B=0\text{ on }\bigcup_{y\in\Lambda'}Ax(y),\ Q_1B=0\}$\,\dots\ variables $B$ restricted to the set of bonds $\tilde\Lambda=\Lambda\backslash(\bigcup_{y\in\Lambda'}Ax(y)\cup\bigcup_{c\in\Lambda'}B(c)\cap c)$\,\dots\ $B=C\tilde B$, where $C$ is a linear operator. It is an identity operator on almost all bonds, except the bonds $b_0$ for which a value $(C\tilde B)(b_0)$ is equal to a solution of the equation $(QB)(c)=0$.'' CMP96 p.245: ``a set of bonds $b$ such that at least one of the end-points $b_-,b_+$ belongs to $\Lambda$''.}{}
+\lean{gA11}
+\tr{$\tilde B$ is an $\mathfrak{su}(2)$-valued field on unit bonds that vanishes on the staircase paths $Ax(y)$ of each $y\in\Lambda'$, on each dropped bond $b_0(c)$ of a coarse bond $c$ having an endpoint in $\Lambda'$, and on every bond with no endpoint in $\Lambda$. $C=\mathrm{id}-hQ_1$ where $h$ solves the constraint on the dropped bonds; it is the identity elsewhere. (The inverse of the constraint matrix $H_0$ is the junk $0$ if $H_0$ is not bijective.)}
+\dev{N1: ``touching'' (at least one endpoint) for $\tilde B$ and $c$, per CMP96 p.245; this is a larger set of $\tilde B$ than ``$B=0$ on $\Lambda^c$'' with both endpoints (Lean \texttt{InstIneq.toBoth}: the touching form implies the both-endpoint form).}
+\chk{Is $\tilde B$ (vanishing on $Ax(y)$ and on the dropped bonds $b_0$, with the ``at least one endpoint'' bond convention) the variable set of p.428, and is $C=\mathrm{id}-hQ_1$ ``the operator that solves $(QB)(c)=0$ on $b_0$''?}
+
+\clause{A12\quad The form, the norm, the inequality}
+\prt{CMP99b (3.156) p.428: $\langle B,(QG_1Q^*)^{-1}B\rangle-a\langle B,B\rangle-2\langle H_1\tilde D^{(2)}(B),J\rangle=\langle B,\Delta_kB\rangle$. Norm: p.390 (\texttt{p390:l29}): ``a norm $|X|$ of a $N\times N$ matrix means the Hilbert--Schmidt norm: $|X|^2=\mathrm{tr}X^*X$''; p.392 (\texttt{p392:l61}): ``the trace is normalized, i.e., $\mathrm{tr}\,1=1$''.}{}
+\lean{gA12}
+\tr{\texttt{genForm} is the form of (3.156), with $B$ placed at the top level by $\tau^*$ and the first term multiplied by $\eta$; the bilinear pairing of $B$ with itself is the unit-bond $L^2$ pairing. \texttt{genC} is $C$. \texttt{bondEnergy} $\tilde B\mapsto\sum_b\|\tilde B(b)\|^2$, with the norm on $\mathfrak{su}(2)$ equal to the printed trace-normalised Hilbert--Schmidt norm (Lean \texttt{norm\_sq\_eq\_half\_frobSq}). The inverse is Lean's: where $QG_1Q^*$ is not invertible the first term is $0$.}
+\dev{The factor $\eta$ and $\tau^*$ in the first term are the printed units, not a deviation (d=3): the print pairs fields with weight $\eta^d$ (p.392 (3.11); p.393) and gives derivatives a factor $\eta^{-1}$ (p.392 (3.8)); every operator in (3.128) is $\eta^{d-2}$ times its unit-spacing form, so $\langle B,(QG_1Q^*)^{-1}B\rangle$ in print units equals $\eta\langle\tau^*B,(QG_1Q^*)^{-1}_{\rm unit}\tau^*B\rangle$, while $a\langle B,B\rangle$ and the $J$ term carry no $\eta$ (Lean: \texttt{firstTerm\_eq\_print}, \texttt{H1\_eq}, $J$ scaling and $\langle B,B\rangle=\mathrm{bondEnergy}(B)$). $\tau^*$ is zero-extension of $B$ to the top level $k$, where all weights are $1$. Read, not proved: the normalisation of $\tilde D^{(2)}$ and of $C^{(2)}$ below level $k$. The junk value $0$ makes the statement stronger than one that presupposes existence of the inverses.}
+\chk{Is $\|\tilde B\|^2=\sum_b\|\tilde B(b)\|^2$ with trace-normalised norm the norm of the printed lower bound $\gamma_0\|\tilde B\|^2$?}
+
+\clause{A13\quad The inequality, the inner claim, the constants, the quantifier order}
+\prt{CMP99b p.428 (\texttt{p428:l53}): ``It is more convenient to work with the operator $\tilde C^{(k)}(\Lambda)$, because it is defined by a positive definite operator $C^*\Delta_kC$ with a lower bound $\gamma_0>0$ independent of $k$ and $U$. We have proved it in [4], Lemma 2.4, for operators with $U=1$. Localizing the operators in $\Delta_k$ and using the methods of Sect.~B we can prove it for $C^*\Delta_kC$ with an arbitrary configuration $U$ satisfying (3.35), (3.36) with $M\alpha_0$ sufficiently small.'' $R$, $M$: p.408 (\texttt{p408:l31}): ``We take these numbers as powers of $L$.''}{}
+\lean{gA13}
+\tr{\texttt{InstIneq}: for every admissible $\tilde B$, $\gamma_0\|\tilde B\|^2\le\mathrm{genForm}(C\tilde B)$. \texttt{CoercG8At}: for tori, towers, regions $\Lambda$ and configurations $U$ satisfying all the hypotheses above, \texttt{InstIneq} holds. \texttt{P428Core8At}: there are $a_0,\gamma_0>0$ (chosen \emph{before} $k$) such that for every $k\ge1$, torus, and $\alpha_0>0$ with $cM\alpha_0\le a_0$, \texttt{CoercG8At} holds; the headline has $c=12$. \texttt{P428Target8}: for every $\ell\ge2$ and $a>0$ there is $m_0$ such that for all $m\ge m_0$ there is $R_0$ such that for all $R\ge R_0$ (with $M=\ell^m$) the above holds.}
+\dev{D4: $a_0,\gamma_0$ are independent of $k\ge1$, torus, $\alpha_0$, tower, $\Lambda$, $U$, $\tilde B$ (the print: ``independent of $k$ and $U$''); they may depend on $\ell,a,M,R$. D5, D6: all $a>0$ and all $\ell\ge2$. D8: $k\ge1$. N5: $M=\ell^m$. ``$M\alpha_0$ sufficiently small'' is $12M\alpha_0\le a_0$ with $a_0$ existential. ``$M$, $R$ sufficiently large'' is $m\ge m_0$, $R\ge R_0$, both existential.}
+\chk{Is the prover's order of choice (the constants $a_0,\gamma_0$ fixed after $\ell,a,m,R$ and before $k$, torus, $\alpha_0$, tower, $\Lambda$, $U$, $\tilde B$) what ``independent of $k$ and $U$'' means?}
+
+\section*{Part B. The whole statement in ordinary notation}
+Write $M=\ell^m$, $\eta=\ell^{-k}$, $N_\mu=\Lu_\mu+1$ (unit sites per side), fine torus with $N_\mu\ell^k$ sites per side. \textbf{Who chooses:} $\forall$ = the adversary, $\exists$ = the prover; the order is left to right.
+\begin{align*}
+&\forall \ell\ge2\ \forall a>0\ \ \exists m_0\ge1\ \ \forall m\ge m_0\ \ \exists R_0\ \ \forall R\ge R_0:\\
+&\quad \exists a_0>0\ \ \exists\gamma_0>0\ \ \forall k\ge1\ \ \forall\Lu\ \ \forall\alpha_0>0\text{ with }12M\alpha_0\le a_0:\\
+&\quad\quad\text{if }\ell\mid N_\mu,\ \ell<N_\mu,\ M\mid N_\mu\ (\mu=1,2,3),\ \text{then}\\
+&\quad\quad\forall\text{ towers }S=(\Omega_j)_{j\ge0}\text{ on the fine torus with }\mathrm{Admissible}(\ell,M,R,k,S)\\&\quad\quad\forall\Lambda\subset\text{unit torus with }\mathrm{LambdaOK2}(\ell,M,R,k,S,\Lambda)\\
+&\quad\quad\forall U:\text{fine bonds}\to SU(2)\text{ with }\mathrm{ClassCoupled}(\ell,M,12,k,S,\alpha_0,\eta,U):\\
+&\quad\quad\quad\forall\tilde B:\text{unit bonds}\to\mathfrak{su}(2)\text{ admissible (A11)}:\\&\quad\quad\quad\quad \gamma_0\sum_b\|\tilde B(b)\|^2\ \le\ \mathrm{genForm}_{(S,U,a,\Lambda)}(C\tilde B).
+\end{align*}
+where $\mathrm{genForm}(B)=\eta\langle\tau^*B,(QG_1Q^*)^{-1}\tau^*B\rangle-a\langle B,B\rangle-2\langle H_1\tilde D^{(2)}(B),J\rangle$ with all operators built from $(S,U,a,\Lambda)$ as in A8--A12. $\mathrm{ClassCoupled}(c)$ = [every site and every $\Omega_0$-plaquette lies in a class cube of factor $c$] $\wedge$ [$\forall$ class cube $\square$ of factor $c$ and index $j$: $\exists g,A$ with $U^g=e^{i\eta A}$ on $\square$ and (3.35), (3.36) with $cM\alpha_0$]. $S$ ranges over all admissible towers, not over one chosen by the prover; $\gamma_0$ does not depend on $k$, $U$, $S$, $\Lambda$, $\tilde B$, $\alpha_0$ or the torus. Consequences visible in the text: (i) no hypothesis involves $a_0$ except $12M\alpha_0\le a_0$, which is satisfiable for any $a_0$ by taking $\alpha_0$ small, so the prover cannot empty the statement by its choice of $a_0$; (ii) the thresholds $m_0,R_0$ are existential and unnumbered; (iii) $\gamma_0$ may depend on $\ell,a,m,R$ (the print names neither $M$ nor $R$).
+
+\section*{Part C. Stated readings: what changes if rejected, and what is proved instead}
+Lean names are in the appendix with file and line. ``Proved'' means a Lean theorem in the project's rebuilt tree, depending only on the three standard axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.03\linewidth}>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.33\linewidth}>{\raggedright\arraybackslash}p{0.35\linewidth}@{}}
+\toprule
+\# & reading & if the reader rejects it & proved alternative (Lean) \\\midrule\endhead
+1 & \textbf{Reading A of $T_1$} (p.396): $T_1$ is the fine lattice in its own unit; blocks of $\Omega_0$ have $M$ fine sites, radius $RM$ fine sites. & Reading B ($T_1$ = level-$k$ unit lattice) gives a larger $\Omega_0$ built from blocks of $M\ell^k$ fine sites. The frozen statement itself covers only A. & \texttt{target8Layer} (\texttt{Target8Layer}) drops the clause (6) and keeps only the strict collar and block closure, so any block-closed $\Omega_0$ with the collar is covered. \\
+2 & \textbf{Choice of $\Omega_0$ (p.396/p.394)}: the layer $\le RM$ (``e.g.''); a thinner layer is permitted by p.394. & A thinner (smaller) block-closed $\Omega_0$ is not covered by the frozen statement. A layer must still satisfy the strict collar $R_0M$, $R_0\ge R_1$. & \texttt{target8Layer}: \texttt{P428Target8} with \texttt{Admissible} replaced by \texttt{AdmNoBase} (no clause 6; one radius). Class cubes read from the same $\Omega_0$. Two-domain form (operators on a thin $\Omega_0^{op}$, class on a larger $\Omega_0^{cl}\supseteq\Omega_0^{op}$): \texttt{target8TwoDom}; for unions, boxes, level-0 caps: \texttt{famTwoDom\_union}, \texttt{famTwoDom\_box}, \texttt{famTwoDom\_cap} . \emph{Not covered}: collars below the sufficient threshold $R_1$ (existential, no value). \\
+3 & \textbf{One cube factor $c=12$}, one factor for the whole class (p.409). & The print attaches $O(1)\ge10$ to each cube. & \texttt{P428Genuine8AllC} (every $c\ge10$ fixed first; \texttt{ZT5A.lean:257}); \texttt{P428Target8Total} (\texttt{TT\_F.lean:29}: constants fixed before $c\ge10$); \texttt{P428Target8FamilyTorus} (\texttt{MXQ\_Tor.lean:58}): each cube its own factor $f\ge10$. \\
+4 & \textbf{Cubes are boxes} of side $fM\ell^j$. & The print says ``union of several big blocks''. & \texttt{P428Target8FamilyTorusU} (\texttt{UNI\_Tor.lean:73}), with \texttt{IsClassUnion}: arbitrary unions of grid cells; implies the box statement. Level-$0$ cap class (cubes may leave $\Omega_0$; regularity on cube $\cap\,\Omega_0$): \texttt{FamTorusCapLayer}, \texttt{ClassCoupledCap}. The factor is a label not the size, and the block scale is $M\ell^j$ fine sites (not the literal subscript $T_{L^{-j}}$ with $\eta=\ell^{-k}$). \\
+5 & \textbf{Bond convention}: class bonds have \emph{both} endpoints in the cube (\texttt{CubeBond}); $\tilde B$ uses ``at least one'' (N1). Print: CMP96 p.224 says at least one for domains; CMP102 p.277 states it as a general convention: domains are identified ``as sets of bonds with at least one end-point belonging to $\Omega_j$, or sets of plaquettes with at least one corner belonging to $\Omega_j$. This remark applies to other sets also.'' & For the class: if class bonds must be touching bonds, $U$ is constrained on more bonds, so the hypothesis on $U$ is stronger and the claim is weaker; the frozen ``both endpoints'' class is the larger class (expected to imply the touching version, not yet a Lean theorem, since the coverage clause also uses \texttt{CubeBond}). For the operators: if the domains $\Omega_j$, $\Lambda$ themselves are read as touching bond and corner plaquette sets, as CMP102 p.277 says, the operators change; see row 7 (plaquette selection). & None proved. \texttt{CubeBond} omits a bond incident to it; no theorem converts ``both'' to ``at least one''. \\
+6 & \textbf{Coverage} (A7) is an added hypothesis. & If dropped, the encoded statement is \emph{false}: \texttt{P428Target8NC} (coverage dropped) is refuted at $\ell=3$, $a=\tfrac12$, via an in-class $U$ at which $G^{-1}$ is not invertible (Lean junk value $0$). Whether a coverage-free lemma presupposing the printed inverses holds is not decided. & \texttt{coverage\_necessary} ($\texttt{P428Target8}\wedge\neg\texttt{P428Target8NC}$), \texttt{tip\_counterexample}, \texttt{not\_P428Target8NC}. No variant without coverage. \\
+7 & \textbf{Plaquette selection} (A9): $\Delta$, $J$ over plaquettes inside $\Omega_0$ (\texttt{plaqIn}). & The print sums (3.10), (3.11) over all plaquettes. Literal readings are refuted (the Lean statement fails where $G^{-1}$ is not a unit), but whether the printed claim fails where all inverses exist is not decided. & \texttt{P428Target8S selIn selIn = P428Target8} (\texttt{rfl}); \texttt{not\_P428Target8Literal} (all plaquettes); \texttt{not\_P428Target8LiteralBoth}. No proved variant for the all-plaquette reading. \\
+8 & \textbf{Bond/norm and normalisations}: Frobenius norm in the class ($\sqrt2$, $\surd2$); $\eta$ and $\tau^*$ in the first term of \texttt{genForm}; jets of $Q$ (D10, D11). & Constants change; $a_0$ absorbs the norm factor. The $\eta$-factor and $\tau^*$ are the printed units (row A12). & None. \\
+9 & \textbf{Junk-value inverse} ($0$ where non-invertible). & A version that presupposes the inverses exist is a different statement; the frozen one is stronger. & \texttt{p428Target8Total} proves the form with existence of inverses in the conclusion (\texttt{CoercG8AtWD}); \texttt{TT\_F.lean:29}. \\
+\bottomrule
+\end{longtable}
+
+\section*{Appendix. Sources (file:line)}
+\fontsize{8.6}{10.2}\selectfont
+Statement: \texttt{lean/src/ZT5A.lean} (\texttt{P428Target8} at 291; \texttt{CoercG8At} 89; \texttt{InstIneq} 56; \texttt{P428Core8At} 170; \texttt{SidePow6} 200; \texttt{P428Genuine8} 229). Tower and class: \texttt{ZStatementP428.lean}; $\Lambda$: \texttt{ZT4A.lean}; regularity: \texttt{ZR2A.lean}; coverage: \texttt{ZR6A.lean}; operators: \texttt{ZR2Ops2.lean}, \texttt{ZXR2Wire1.lean}, \texttt{ZXR2Wire2.lean}, \texttt{ZXR2Unit2.lean}, \texttt{ZXG3A.lean}; base operators: \texttt{R2Ops1.lean}, \texttt{R2Algebra.lean}; norm: \texttt{RegularUPerturbation.lean:355} (all under \texttt{lean/src/}). Printed sources: T.~Ba{\l}aban, Commun.\ Math.\ Phys.\ 96 (1984) 223--250 and 99 (1985) 389--434, pages as cited in each row. Running \texttt{lean/Statement.lean} prints every definition quoted above.
+\end{document}

@@ -1,0 +1,313 @@
+P428Target8 : Prop
+def AdalyFormal.StatementLaneG.P428Target8 : Prop :=
+∀ (ell : ℕ) (hell : 2 ≤ ell) (a : ℝ),
+  0 < a →
+    ∃ m₀,
+      1 ≤ m₀ ∧
+        ∀ (m : ℕ), m₀ ≤ m → ∃ R₀, ∀ (R : ℕ), R₀ ≤ R → P428Genuine8 ell (ell ^ m) R (P428Target8._proof_2 ell hell) a
+def AdalyFormal.StatementLaneG.P428Genuine8 : (ell : ℕ) → ℕ → ℕ → 0 < ell → ℝ → Prop :=
+fun ell M R hell a ↦ SidePow6 ell M a ∧ P428Core8 ell M R hell a
+def AdalyFormal.StatementLaneG.SidePow6 : ℕ → ℕ → ℝ → Prop :=
+fun ell M a ↦ 2 ≤ ell ∧ (∃ m, 1 ≤ m ∧ M = ell ^ m) ∧ 0 < a
+def AdalyFormal.StatementLaneG.P428Core8 : (ell : ℕ) → ℕ → ℕ → 0 < ell → ℝ → Prop :=
+fun ell M R hell a ↦ P428Core8At ell M R hell a 12
+def AdalyFormal.StatementLaneG.P428Core8At : (ell : ℕ) → ℕ → ℕ → 0 < ell → ℝ → ℕ → Prop :=
+fun ell M R hell a c ↦
+  ∃ a₀,
+    0 < a₀ ∧
+      ∃ γ₀,
+        0 < γ₀ ∧
+          ∀ (k : ℕ),
+            1 ≤ k →
+              ∀ (Lu : PeriodicLatticeExtent) (α₀ : ℝ),
+                0 < α₀ → ↑c * ↑M * α₀ ≤ a₀ → CoercG8At ell M R k hell a Lu c α₀ γ₀
+def AdalyFormal.StatementLaneG.CoercG8At : (ell : ℕ) →
+  ℕ → ℕ → ℕ → 0 < ell → ℝ → PeriodicLatticeExtent → ℕ → ℝ → ℝ → Prop :=
+fun ell M R k hell a Lu c α₀ γ₀ ↦
+  TorusOK ell M Lu →
+    ∀ (S : Tower (scaleUp ell k Lu)),
+      Admissible ell M R k S →
+        ∀ (Lam : Set (PeriodicLatticeSite Lu)),
+          LambdaOK2 ell M R k S Lam →
+            ∀ (U : AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg (scaleUp ell k Lu)),
+              ClassCoupled ell M c k S α₀ (↑ell ^ k)⁻¹ U → InstIneq ell k hell a Lu γ₀ S Lam U
+@[reducible] def AdalyFormal.Target.ClayStatement.PeriodicLatticeExtent : Type :=
+Fin 3 → ℕ
+def AdalyFormal.StatementLane.scaleUp : ℕ → ℕ → PeriodicLatticeExtent → PeriodicLatticeExtent :=
+fun ell k Lu μ ↦ (Lu μ + 1) * ell ^ k - 1
+structure AdalyFormal.StatementLane.Tower (L : PeriodicLatticeExtent) : Type
+number of parameters: 1
+fields:
+  AdalyFormal.StatementLane.Tower.Om : ℕ → Set (PeriodicLatticeSite L)
+constructor:
+  AdalyFormal.StatementLane.Tower.mk {L : PeriodicLatticeExtent} (Om : ℕ → Set (PeriodicLatticeSite L)) : Tower L
+def AdalyFormal.StatementLane.bigSide : ℕ → ℕ → ℕ → ℕ :=
+fun M ell j ↦ M * ell ^ j
+def AdalyFormal.StatementLane.pcd : ℕ → ℕ → ℕ → ℕ :=
+fun N a b ↦ min (if a ≤ b then b - a else a - b) (N - if a ≤ b then b - a else a - b)
+def AdalyFormal.StatementLane.pdist : {L : PeriodicLatticeExtent} → PeriodicLatticeSite L → PeriodicLatticeSite L → ℕ :=
+fun {L} x y ↦ ∑ μ, pcd (L μ + 1) ↑(x μ) ↑(y μ)
+def AdalyFormal.StatementLane.BlockClosed : {L : PeriodicLatticeExtent} → ℕ → Set (PeriodicLatticeSite L) → Prop :=
+fun {L} s S ↦ ∀ x ∈ S, ∀ (y : PeriodicLatticeSite L), (∀ (μ : Fin 3), ↑(y μ) / s = ↑(x μ) / s) → y ∈ S
+def AdalyFormal.StatementLane.Admissible : {L : PeriodicLatticeExtent} → ℕ → ℕ → ℕ → ℕ → Tower L → Prop :=
+fun {L} ell M R k S ↦
+  (∀ (j : ℕ), S.Om (j + 1) ⊆ S.Om j) ∧
+    (∀ (j : ℕ), k < j → S.Om j = ∅) ∧
+      (∀ j ≤ k, ∀ (μ : Fin 3), bigSide M ell j ∣ L μ + 1) ∧
+        (∀ j ≤ k, BlockClosed (bigSide M ell j) (S.Om j)) ∧
+          (∀ j ≤ k, ∀ x ∉ S.Om j, ∀ y ∈ S.Om (j + 1), R * bigSide M ell j < pdist x y) ∧
+            ∀ (x : PeriodicLatticeSite L),
+              x ∈ S.Om 0 ↔ ∃ y ∈ S.Om 1, ∃ z, (∀ (μ : Fin 3), ↑(z μ) / M = ↑(x μ) / M) ∧ pdist z y ≤ R * M
+def AdalyFormal.StatementLane.TorusOK : ℕ → ℕ → PeriodicLatticeExtent → Prop :=
+fun ell M Lu ↦ (∀ (μ : Fin 3), ell ∣ Lu μ + 1) ∧ (∀ (μ : Fin 3), ell < Lu μ + 1) ∧ ∀ (μ : Fin 3), M ∣ Lu μ + 1
+def AdalyFormal.StatementLane.LambdaOK : {Lu Lf : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower Lf → Set (PeriodicLatticeSite Lu) → Prop :=
+fun {Lu Lf} ell M R k S Lam ↦
+  BlockClosed M Lam ∧
+    ∃ emb,
+      (∀ (y : PeriodicLatticeSite Lu) (μ : Fin 3), ↑(emb y μ) = ell ^ k * ↑(y μ)) ∧
+        (∀ y ∈ Lam, emb y ∈ S.Om k) ∧ ∀ y ∈ Lam, ∀ (y' : PeriodicLatticeSite Lu), emb y' ∉ S.Om k → R * M < pdist y y'
+def AdalyFormal.StatementLaneG.LamBlockSum : {Lu : PeriodicLatticeExtent} → ℕ → Set (PeriodicLatticeSite Lu) → Prop :=
+fun {Lu} ell Lam ↦ ∀ x ∈ Lam, ∃ y ∈ LamPrime ell Lam, x ∈ AdalyFormal.Balaban.AdmissibleSubspace.blockOf y ell
+def AdalyFormal.StatementLaneG.LambdaOK2 : {Lu Lf : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower Lf → Set (PeriodicLatticeSite Lu) → Prop :=
+fun {Lu Lf} ell M R k S Lam ↦ LambdaOK ell M R k S Lam ∧ LamBlockSum ell Lam
+def AdalyFormal.StatementLane.LamPrime : {Lu : PeriodicLatticeExtent} →
+  ℕ → Set (PeriodicLatticeSite Lu) → Set (PeriodicLatticeSite Lu) :=
+fun {Lu} ell Lam ↦
+  {y |
+    y ∈ AdalyFormal.Balaban.AdmissibleSubspace.CoarseLattice Lu ell ∧
+      ∀ x ∈ AdalyFormal.Balaban.AdmissibleSubspace.blockOf y ell, x ∈ Lam}
+def AdalyFormal.StatementLane.towerBj : {L : PeriodicLatticeExtent} → Tower L → ℕ → Set (PeriodicLatticeSite L) :=
+fun {L} S j ↦ S.Om j \ S.Om (j + 1)
+def AdalyFormal.StatementLane.siteBox : {L : PeriodicLatticeExtent} →
+  PeriodicLatticeSite L → ℕ → Set (PeriodicLatticeSite L) :=
+fun {L} z s ↦ {x | ∀ (μ : Fin 3), (↑(x μ) + (L μ + 1) - ↑(z μ)) % (L μ + 1) < s}
+def AdalyFormal.StatementLane.GridCorner : {L : PeriodicLatticeExtent} → ℕ → PeriodicLatticeSite L → Prop :=
+fun {L} s z ↦ ∀ (μ : Fin 3), ↑(z μ) % s = 0
+def AdalyFormal.StatementLane.DescribedAt : {L : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower L → Set (PeriodicLatticeSite L) → ℕ → Prop :=
+fun {L} ell M f k S sites i ↦
+  i ≤ k ∧
+    (∃ z, GridCorner (bigSide M ell i) z ∧ sites = siteBox z (f * bigSide M ell i)) ∧
+      sites ⊆ towerBj S i ∪ towerBj S (i + 1) ∧ (sites ∩ towerBj S i).Nonempty
+def AdalyFormal.StatementLane.IsClassCube : {L : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower L → Set (PeriodicLatticeSite L) → ℕ → Prop :=
+fun {L} ell M f k S sites j ↦ DescribedAt ell M f k S sites j ∧ ∀ (i : ℕ), DescribedAt ell M f k S sites i → i = j
+def AdalyFormal.StatementLane.CubeBond : {L : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite L) → AdalyFormal.Balaban.AdmissibleSubspace.Bond L → Prop :=
+fun {L} sites b ↦ b.1 ∈ sites ∧ periodicLatticeShift b.1 b.2 ∈ sites
+def AdalyFormal.StatementLane2.ClassCoupled : {L : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower L → ℝ → ℝ → AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg L → Prop :=
+fun {L} ell M c k S α₀ η U ↦ CoversOm0p ell M c k S ∧ PerCubeRegular2 ell M c k S α₀ η U
+def AdalyFormal.StatementLane2.CoversOm0p : {L : PeriodicLatticeExtent} → ℕ → ℕ → ℕ → ℕ → Tower L → Prop :=
+fun {L} ell M c k S ↦ CoversOm0c ell M c k S ∧ CoversPlaqOm0c ell M c k S
+def AdalyFormal.StatementLane2.CoversOm0c : {L : PeriodicLatticeExtent} → ℕ → ℕ → ℕ → ℕ → Tower L → Prop :=
+fun {L} ell M c k S ↦ ∀ x ∈ S.Om 0, ∃ sites j, IsClassCube ell M c k S sites j ∧ x ∈ sites
+def AdalyFormal.StatementLane2.CoversPlaqOm0c : {L : PeriodicLatticeExtent} → ℕ → ℕ → ℕ → ℕ → Tower L → Prop :=
+fun {L} ell M c k S ↦
+  ∀ (p : PeriodicLatticePlaquette L),
+    (∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond (S.Om 0) e) →
+      ∃ sites j, IsClassCube ell M c k S sites j ∧ ∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond sites e
+def AdalyFormal.StatementLane2.PerCubeRegular2 : {L : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℕ → Tower L → ℝ → ℝ → AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg L → Prop :=
+fun {L} ell M f k S α₀ η U ↦
+  ∀ (sites : Set (PeriodicLatticeSite L)) (j : ℕ),
+    IsClassCube ell M f k S sites j →
+      ∃ g A,
+        (∀ (e : AdalyFormal.Balaban.AdmissibleSubspace.Bond L),
+            CubeBond sites e →
+              HT (A e) ∧
+                ↑(periodicGaugeTransform g U e) = NormedSpace.exp ((↑η * Complex.I) • A e) ∧
+                  AdalyFormal.Balaban.RMapLipschitz.frobNorm (A e) < ↑f * ↑M * α₀ * (↑ell ^ j * η)⁻¹ ^ 1) ∧
+          (∀ (μ ν : Fin 3) (x : PeriodicLatticeSite L),
+              CubeBond sites (x, ν) →
+                CubeBond sites (periodicLatticeShift x μ, ν) →
+                  AdalyFormal.Balaban.RMapLipschitz.frobNorm (η⁻¹ • (A (periodicLatticeShift x μ, ν) - A (x, ν))) <
+                    ↑f * ↑M * α₀ * (↑ell ^ j * η)⁻¹ ^ 2) ∧
+            ∀ (μ : Fin 3) (x : PeriodicLatticeSite L),
+              (∀ (ν : Fin 3),
+                  ν ≠ μ →
+                    CurlReads sites (AdalyFormal.Balaban.CovariantHjMinimizer.periodicLatticeShiftBack x ν) ν μ ∧
+                      CurlReads sites x ν μ) →
+                AdalyFormal.Balaban.RMapLipschitz.frobNorm (ddA η A x μ) < ↑f * ↑M * α₀ * (↑ell ^ j * η)⁻¹ ^ 3
+def AdalyFormal.StatementLane2.PlaqGaugeAt : {L : PeriodicLatticeExtent} →
+  ℕ → ℕ → ℕ → ℝ → ℝ → AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg L → PeriodicLatticePlaquette L → Prop :=
+fun {L} ell M c α₀ η U p ↦
+  ∃ g A j,
+    ∀ e ∈ periodicPlaquetteBoundaryEdges p,
+      HT (A e) ∧
+        ↑(periodicGaugeTransform g U e) = NormedSpace.exp ((↑η * Complex.I) • A e) ∧
+          AdalyFormal.Balaban.RMapLipschitz.frobNorm (A e) < ↑c * ↑M * α₀ * (↑ell ^ j * η)⁻¹ ^ 1
+def AdalyFormal.StatementLane.HT : Matrix (Fin 2) (Fin 2) ℂ → Prop :=
+fun X ↦ X.conjTranspose = X ∧ X.trace = 0
+def AdalyFormal.StatementLane2.ddA : {L : PeriodicLatticeExtent} →
+  ℝ →
+    (AdalyFormal.Balaban.AdmissibleSubspace.Bond L → Matrix (Fin 2) (Fin 2) ℂ) →
+      PeriodicLatticeSite L → Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+fun {L} η A x μ ↦
+  η⁻¹ •
+    ∑ ν with ν ≠ μ,
+      (curlA η A (AdalyFormal.Balaban.CovariantHjMinimizer.periodicLatticeShiftBack x ν) ν μ - curlA η A x ν μ)
+def AdalyFormal.StatementLane2.curlA : {L : PeriodicLatticeExtent} →
+  ℝ →
+    (AdalyFormal.Balaban.AdmissibleSubspace.Bond L → Matrix (Fin 2) (Fin 2) ℂ) →
+      PeriodicLatticeSite L → Fin 3 → Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
+fun {L} η A x a b ↦ η⁻¹ • (A (periodicLatticeShift x a, b) - A (x, b) - A (periodicLatticeShift x b, a) + A (x, a))
+def AdalyFormal.StatementLane2.CurlReads : {L : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite L) → PeriodicLatticeSite L → Fin 3 → Fin 3 → Prop :=
+fun {L} sites x a b ↦
+  CubeBond sites (periodicLatticeShift x a, b) ∧
+    CubeBond sites (x, b) ∧ CubeBond sites (periodicLatticeShift x b, a) ∧ CubeBond sites (x, a)
+def AdalyFormal.StatementLane.OnLambdaTildeIn : {Lu : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite Lu) →
+    ℕ → (AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) → Prop :=
+fun {Lu} Lam ell B ↦
+  (∀ y ∈ LamPrime ell Lam,
+      ∀ x ∈ AdalyFormal.Balaban.AdmissibleSubspace.blockOf y ell,
+        ∀ b ∈ AdalyFormal.Balaban.AdmissibleSubspace.staircasePath y x, B b = 0) ∧
+    ∀ (b : AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu), IsDroppedIn Lam ell b → B b = 0
+def AdalyFormal.StatementLane.IsDroppedIn : {Lu : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite Lu) → ℕ → AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu → Prop :=
+fun {Lu} Lam ell b ↦ ∃ c, CRowIn ell Lam c ∧ b = AdalyFormal.Balaban.ReparamCDisjoint.droppedBondLast ell c
+def AdalyFormal.StatementLane.CRowIn : {Lu : PeriodicLatticeExtent} →
+  (ell : ℕ) → Set (PeriodicLatticeSite Lu) → AdalyFormal.Balaban.LatticeOperators.CoarseBond Lu ell → Prop :=
+fun {Lu} ell Lam c ↦
+  ↑c.1 ∈ LamPrime ell Lam ∨ AdalyFormal.Balaban.CoarseCurl.coarseShift (↑c.1) ell c.2 ∈ LamPrime ell Lam
+def AdalyFormal.StatementLane2.OnLambdaT : {Lu : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite Lu) →
+    (AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) → Prop :=
+fun {Lu} Lam B ↦
+  ∀ (b : AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu), ¬(b.1 ∈ Lam ∨ periodicLatticeShift b.1 b.2 ∈ Lam) → B b = 0
+def AdalyFormal.StatementLaneG.InstIneq : (ell k : ℕ) →
+  0 < ell →
+    ℝ →
+      (Lu : PeriodicLatticeExtent) →
+        ℝ →
+          Tower (scaleUp ell k Lu) →
+            Set (PeriodicLatticeSite Lu) → AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg (scaleUp ell k Lu) → Prop :=
+fun ell k hell a Lu γ₀ S Lam U ↦
+  ∀ (Bt : AdalyFormal.Balaban.AdmissibleSubspace.Bond Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo),
+    OnLambdaTildeIn Lam ell Bt →
+      OnLambdaT Lam Bt →
+        γ₀ * AdalyFormal.Balaban.RegularUPerturbation.bondEnergy Bt ≤
+          GenP.genForm (gparams ell k Lu hell S U a Lam)
+            (WithLp.toLp 2 ((GenP.genC (gparams ell k Lu hell S U a Lam)) Bt))
+def AdalyFormal.Balaban.RegularUPerturbation.bondEnergy : {L : PeriodicLatticeExtent} →
+  (AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) → ℝ :=
+fun {L} A ↦ ∑ b, ‖A b‖ ^ 2
+@[reducible] def AdalyFormal.StatementLaneG.gparams : (ell k : ℕ) →
+  (Lu : PeriodicLatticeExtent) →
+    0 < ell →
+      Tower (scaleUp ell k Lu) →
+        AdalyFormal.Balaban.CoercUMainDesigned.LinkCfg (scaleUp ell k Lu) →
+          ℝ → Set (PeriodicLatticeSite Lu) → IngrBParams :=
+fun ell k Lu hell S U a Lam ↦ { ell := ell, k := k, Lu := Lu, hell := hell, S := S, U := U, a := a, Lam := Lam }
+structure AdalyFormal.IngredientFamilyR2.IngrBParams : Type
+number of parameters: 0
+fields:
+  AdalyFormal.IngredientFamilyR2.IngrBParams.ell : ℕ
+  AdalyFormal.IngredientFamilyR2.IngrBParams.k : ℕ
+  AdalyFormal.IngredientFamilyR2.IngrBParams.Lu : PeriodicLatticeExtent
+  AdalyFormal.IngredientFamilyR2.IngrBParams.hell : 0 < self.ell
+  AdalyFormal.IngredientFamilyR2.IngrBParams.S : Tower (scaleUp self.ell self.k self.Lu)
+  AdalyFormal.IngredientFamilyR2.IngrBParams.U : PeriodicLinkConfiguration AdalyFormal.Balaban.SuTwoLogExp.SU2
+      (scaleUp self.ell self.k self.Lu)
+  AdalyFormal.IngredientFamilyR2.IngrBParams.a : ℝ
+  AdalyFormal.IngredientFamilyR2.IngrBParams.Lam : Set (PeriodicLatticeSite self.Lu)
+constructor:
+  AdalyFormal.IngredientFamilyR2.IngrBParams.mk (ell k : ℕ) (Lu : PeriodicLatticeExtent) (hell : 0 < ell)
+    (S : Tower (scaleUp ell k Lu))
+    (U : PeriodicLinkConfiguration AdalyFormal.Balaban.SuTwoLogExp.SU2 (scaleUp ell k Lu)) (a : ℝ)
+    (Lam : Set (PeriodicLatticeSite Lu)) : IngrBParams
+def AdalyFormal.StatementLaneG.GenP.genForm : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu → ℝ :=
+fun P B ↦ GenP.firstTerm P B - P.a * inner ℝ B B - 2 * inner ℝ (P.H1in (P.D2in B)) P.Jf
+def AdalyFormal.StatementLaneG.GenP.firstTerm : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu → ℝ :=
+fun P B ↦
+  P.eta *
+    inner ℝ ((ContinuousLinearMap.adjoint P.tau) B)
+      ((Ring.inverse (GenP.Nmat P)) ((ContinuousLinearMap.adjoint P.tau) B))
+def AdalyFormal.StatementLaneG.GenP.Nmat : (P : IngrBParams) → FSp P.G →L[ℝ] FSp P.G :=
+fun P ↦ (P.data.Q ∘SL P.data.G1 P.G1inv) ∘SL P.data.Qs
+def AdalyFormal.StatementLaneG.GenP.genC : (P : IngrBParams) →
+  (AdalyFormal.Balaban.AdmissibleSubspace.Bond P.Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+    AdalyFormal.Balaban.AdmissibleSubspace.Bond P.Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun P ↦ Cop P.Lam P.Q1
+def AdalyFormal.IngredientFamilyR2.IngrBParams.Jf : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 (scaleUp P.ell P.k P.Lu) :=
+fun P ↦ WithLp.toLp 2 fun b ↦ -AdalyFormal.IngredientFamily.JSU2Loc 1 (plaqIn P.G.Om0) P.U b
+def AdalyFormal.IngredientFamilyR2.IngrBParams.data : (P : IngrBParams) →
+  BaseDataS (↥(bondSupp P.G)) (SiteL2 (scaleUp P.ell P.k P.Lu)) (FSp P.G) :=
+fun P ↦ baseData P.G P.U P.a P.sector P.Jf
+def AdalyFormal.IngredientFamilyR2.IngrBParams.G1inv : (P : IngrBParams) → ↥(bondSupp P.G) →L[ℝ] ↥(bondSupp P.G) :=
+fun P ↦ Classical.choose (IngrBParams.G1inv._proof_1 P)
+def AdalyFormal.IngredientFamilyR2.IngrBParams.Q1 : (P : IngrBParams) →
+  (AdalyFormal.Balaban.AdmissibleSubspace.Bond P.Lu → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+    AdalyFormal.Balaban.LatticeOperators.CoarseBond P.Lu P.ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun P ↦ Q1jet P.ell P.unitBgU
+def AdalyFormal.IngredientFamilyR2.IngrBParams.unitBgU : (P : IngrBParams) →
+  PeriodicLinkConfiguration AdalyFormal.Balaban.SuTwoLogExp.SU2 P.Lu :=
+fun P ↦ unitBg P.ell P.k P.Lu P.hell (bgTower P.G P.U P.k)
+def AdalyFormal.IngredientFamilyR2.IngrBParams.tau : (P : IngrBParams) →
+  FSp P.G →L[ℝ] AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu :=
+fun P ↦ tauExt P.ell P.k P.Lu P.hell P.S
+def AdalyFormal.IngredientFamilyR2.IngrBParams.Qin : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 (scaleUp P.ell P.k P.Lu) →L[ℝ]
+    AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu :=
+fun P ↦ P.tau ∘SL P.sector.Qfull
+def AdalyFormal.IngredientFamilyR2.IngrBParams.H1in : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu →L[ℝ]
+    AdalyFormal.Balaban.CovariantOperators.BondFnL2 (scaleUp P.ell P.k P.Lu) :=
+fun P ↦ iE P.G ∘SL P.data.H1 P.G1inv ∘SL ContinuousLinearMap.adjoint P.tau
+def AdalyFormal.IngredientFamilyR2.IngrBParams.D2in : (P : IngrBParams) →
+  AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu → AdalyFormal.Balaban.CovariantOperators.BondFnL2 P.Lu :=
+fun P B ↦ WithLp.toLp 2 ((↑P.ell)⁻¹ • (hLift P.Lam P.Q1) (C2tilde P.ell P.unitBgU B.ofLp))
+def AdalyFormal.IngredientFamilyR2.H0 : {L : PeriodicLatticeExtent} →
+  {ell : ℕ} →
+    (Lam : Set (PeriodicLatticeSite L)) →
+      ((AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.LatticeOperators.CoarseBond L ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →
+        (Dset L ell Lam → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          Dset L ell Lam → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun {L} {ell} Lam Q ↦ rhoD ell Lam ∘ₗ Q ∘ₗ iotaD ell Lam
+def AdalyFormal.IngredientFamilyR2.H0inv : {L : PeriodicLatticeExtent} →
+  {ell : ℕ} →
+    (Lam : Set (PeriodicLatticeSite L)) →
+      ((AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.LatticeOperators.CoarseBond L ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →
+        (Dset L ell Lam → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          Dset L ell Lam → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun {L} {ell} Lam Q ↦ if h : Function.Bijective ⇑(H0 Lam Q) then ↑(LinearEquiv.ofBijective (H0 Lam Q) h).symm else 0
+def AdalyFormal.IngredientFamilyR2.hLift : {L : PeriodicLatticeExtent} →
+  {ell : ℕ} →
+    Set (PeriodicLatticeSite L) →
+      ((AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.LatticeOperators.CoarseBond L ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →
+        (AdalyFormal.Balaban.LatticeOperators.CoarseBond L ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun {L} {ell} Lam Q ↦ iotaD ell Lam ∘ₗ H0inv Lam Q ∘ₗ rhoD ell Lam
+def AdalyFormal.IngredientFamilyR2.Cop : {L : PeriodicLatticeExtent} →
+  {ell : ℕ} →
+    Set (PeriodicLatticeSite L) →
+      ((AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.LatticeOperators.CoarseBond L ell → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →
+        (AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo) →ₗ[ℝ]
+          AdalyFormal.Balaban.AdmissibleSubspace.Bond L → ↥AdalyFormal.Balaban.CovariantOperators.SuTwo :=
+fun {L} {ell} Lam Q ↦ LinearMap.id - hLift Lam Q ∘ₗ Q
+def AdalyFormal.IngredientFamilyR2.plaqIn : {L : PeriodicLatticeExtent} →
+  Set (PeriodicLatticeSite L) → Set (PeriodicLatticePlaquette L) :=
+fun {L} S ↦ {p | ∀ e ∈ periodicPlaquetteBoundaryEdges p, e.1 ∈ S ∧ periodicLatticeShift e.1 e.2 ∈ S}
+def AdalyFormal.IngredientFamilyR2.Delta : {L : PeriodicLatticeExtent} →
+  TowerGeom L →
+    Cfg L → AdalyFormal.Balaban.CovariantOperators.BondFnL2 L →L[ℝ] AdalyFormal.Balaban.CovariantOperators.BondFnL2 L :=
+fun {L} G U ↦ AdalyFormal.StatementLaneR6.deltaKLocCLM U (plaqIn G.Om0)
+def AdalyFormal.IngredientFamilyR2.DpiFull : {L : PeriodicLatticeExtent} →
+  TowerGeom L →
+    Cfg L →
+      ℝ → AdalyFormal.Balaban.CovariantOperators.BondFnL2 L →L[ℝ] AdalyFormal.Balaban.CovariantOperators.BondFnL2 L :=
+fun {L} G U a ↦ ContinuousLinearMap.adjoint (Wop G U a) ∘SL Delta G U ∘SL Wop G U a
+def AdalyFormal.IngredientFamilyR2.Tfull : {L : PeriodicLatticeExtent} →
+  TowerGeom L → Cfg L → AdalyFormal.Balaban.CovariantOperators.BondFnL2 L →L[ℝ] SiteL2 L :=
+fun {L} G U ↦ Rproj G U ∘SL gradAdj U

@@ -1,0 +1,2 @@
+noncomputable def firstTerm (B : BondFnL2 P.Lu) : ℝ :=
+  P.eta * ⟪ContinuousLinearMap.adjoint P.tau B, Ring.inverse (Nmat P) (ContinuousLinearMap.adjoint P.tau B)⟫

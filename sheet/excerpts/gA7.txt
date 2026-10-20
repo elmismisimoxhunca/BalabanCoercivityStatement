@@ -1,0 +1,11 @@
+def CoversOm0c {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  ∀ x ∈ S.Om 0, ∃ (sites : Set (PeriodicLatticeSite L)) (j : ℕ),
+    IsClassCube ell M c k S sites j ∧ x ∈ sites
+def CoversPlaqOm0c {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  ∀ p : PeriodicLatticePlaquette L, (∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond (S.Om 0) e) →
+    ∃ (sites : Set (PeriodicLatticeSite L)) (j : ℕ), IsClassCube ell M c k S sites j ∧
+      ∀ e ∈ periodicPlaquetteBoundaryEdges p, CubeBond sites e
+def CoversOm0p {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) : Prop :=
+  CoversOm0c ell M c k S ∧ CoversPlaqOm0c ell M c k S
+def ClassCoupled {L : PeriodicLatticeExtent} (ell M c k : ℕ) (S : Tower L) (α₀ η : ℝ) (U : LinkCfg L) : Prop :=
+  CoversOm0p ell M c k S ∧ PerCubeRegular2 ell M c k S α₀ η U

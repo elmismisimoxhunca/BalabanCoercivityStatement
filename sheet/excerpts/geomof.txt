@@ -1,0 +1,5 @@
+def geomOf (ell k : ℕ) {Lf : PeriodicLatticeExtent} (S : Tower Lf) : TowerGeom Lf where
+  ell := ell
+  k := k
+  Om0 := S.Om 0
+  Lam := fun j => {x | (∀ μ : Fin 3, ell ^ j ∣ (x μ).val) ∧ x ∈ S.Om j ∧ x ∉ S.Om (j + 1)}

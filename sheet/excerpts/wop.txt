@@ -1,0 +1,2 @@
+noncomputable def Wop (G : TowerGeom L) (U : Cfg L) (a : ℝ) : BondFnL2 L →L[ℝ] BondFnL2 L :=
+  1 - (gradL2 U).comp ((Gp G U a).comp ((Rproj G U).comp (gradAdj U)))
