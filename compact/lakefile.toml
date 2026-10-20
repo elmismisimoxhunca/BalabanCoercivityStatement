@@ -1,0 +1,13 @@
+name = "balaban_compact"
+version = "0.1.0"
+defaultTargets = ["BalabanCompact"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.31.0"
+
+[[lean_lib]]
+name = "BalabanCompact"
+srcDir = "."
+globs = ["BalabanCompact.+"]

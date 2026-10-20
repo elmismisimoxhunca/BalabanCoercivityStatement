@@ -8,10 +8,17 @@ In Balaban's notation the claim is that the quadratic form
 
 restricted to the constrained fields B = C B̃ satisfies C*Δ_k C ≥ γ₀ > 0, with γ₀ independent of the renormalisation level k and of the background field U in the regularity class (3.35)–(3.36).
 
+## What to read
+
+The statement a referee can check is `compact/`. It is 7 Lean modules. The proposition is `BalabanCompact.P428Target8` in `compact/BalabanCompact/Target.lean`. Build it with `lake build` from `compact/`.
+
+`lean/src/` is the earlier encoding of the same headline. Stating it imports 273 modules because the operators were defined inside a proof development. It is kept so the two readings can be compared. They are not tied by a definitional `rfl`.
+
 ## Contents
 
 | Path | Content |
 |---|---|
+| `compact/` | The 7-module statement. Start at `compact/README.md` and `compact/BalabanCompact/Target.lean`. |
 | `sheet/sheet.pdf` | A 7-page comparison of the formal statement with the printed text, clause by clause: the printed sentence, the Lean definition, a plain translation, any deviation, and a yes/no question for the reader. It ends with the statement in ordinary notation and the list of readings that were chosen. |
 | `lean/src/ZT5A.lean` | The statement, `AdalyFormal.StatementLaneG.P428Target8` (line 291). |
 | `lean/src/` | The 273 modules needed to state it (definitions of the lattice, the tower of domains, the class of cubes, regularity, and the operators). |
