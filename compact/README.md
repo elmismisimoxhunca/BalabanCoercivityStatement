@@ -39,8 +39,21 @@ cd compact && lake exe cache get && lake build
 
 ## Headline in Lean
 
-`BalabanCompact.P428Target8` is in `Target.lean`. `genForm` in `Ops2.lean` is
+`BalabanCompact.P428Target8` is in `BalabanCompact/Target.lean`. `genForm` in `BalabanCompact/Ops2.lean` is
 
 `η ⟨τ* B, (Q G₁ Q*)⁻¹ τ* B⟩ − a ⟨B, B⟩ − 2 ⟨H₁ D̃⁽²⁾(B), J⟩`.
 
 `Ops.lean` and `Ops2.lean` build `G'`, `R`, `Δ`, `J`, `G⁻¹`, `G₁⁻¹`, `H₁` and `C = id − h Q₁`. `lake build` in this directory exits 0. This is a second encoding of the frozen headline, not a definitional `rfl` against `AdalyFormal.StatementLaneG.P428Target8`.
+
+## Checked equivalence
+
+The seven statement modules are unchanged. The separate [dictionary project](dictionary/README.md), with 18 proof modules, now establishes:
+
+```lean
+CompactDictionary.p428Target8_iff :
+  BalabanCompact.P428Target8 ↔ AdalyFormal.StatementLaneG.P428Target8
+```
+
+To check it, run `lake exe cache get`, `lake build`, and `lake env lean Check.lean` from `compact/dictionary/`. All its dependencies are public in this repository or pinned third-party packages. The theorem transports the definitions, rather than assuming the two headlines. Its axiom dependencies are exactly `propext`, `Classical.choice`, and `Quot.sound`.
+
+The private coercivity proof can therefore be transported to the compact proposition; that application has been checked privately. The full coercivity proof is not distributed in this repository.

@@ -1,0 +1,20 @@
+name = "balaban_dictionary"
+version = "0.1.0"
+defaultTargets = ["CompactDictionary"]
+
+[[require]]
+name = "balaban_statement"
+path = "../../lean"
+
+[[require]]
+name = "balaban_compact"
+path = ".."
+
+[[lean_lib]]
+name = "CompactDictionary"
+srcDir = "."
+roots = ["CompactDictionary"]
+globs = ["CompactDictionary.+"]
+moreLeanArgs = ["-s", "16384", "-j", "1"]
+[lean_lib.leanOptions]
+autoImplicit = false
